@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Logo from '../components/Logo.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  jsonLd?: unknown | unknown[];
+}
+const { title, description, image = '/images/hero-alun-alun-batam.webp', jsonLd } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
+const absoluteImage = Astro.site ? new URL(image, Astro.site).toString() : image;
+const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+---
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a4147" />
+    <title>{title}</title>
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteImage} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
+    {jsonLdItems.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
+    <script is:inline>
+      (() => {
+        try {
+          const raw = localStorage.getItem('aabc-cookie-preferences');
+          const pref = raw ? JSON.parse(raw) : null;
+          if (!pref?.analytics) return;
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function(){ window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
+          const s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
+          document.head.appendChild(s);
+        } catch (_) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <header class="sticky top-0 z-50 border-b border-black/5 bg-[#f9f6ed]/90 backdrop-blur-xl">
+      <div class="container-shell flex h-[74px] items-center justify-between gap-6">
+        <Logo />
+        <nav class="hidden items-center gap-6 text-sm font-semibold text-[#43565c] md:flex" aria-label="Navigasi utama">
+          <a class="hover:text-[#0f5f62]" href="/#tentang">Tentang</a>
+          <a class="hover:text-[#0f5f62]" href="/#rencana-kunjungan">Rencana Kunjungan</a>
+          <a class="hover:text-[#0f5f62]" href="/#transportasi">Transportasi</a>
+          <a class="hover:text-[#0f5f62]" href="/#faq">Pertanyaan umum</a>
+        </nav>
+        <a href="https://www.google.com/maps/search/?api=1&query=Alun%20Alun%20Batam%20Centre" rel="noopener noreferrer" target="_blank" class="btn-primary hidden sm:inline-flex">Buka peta <span aria-hidden="true">↗</span></a>
+      </div>
+    </header>
+    <main><slot /></main>
+    <Footer />
+  </body>
+</html>

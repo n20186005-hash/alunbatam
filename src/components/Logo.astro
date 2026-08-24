@@ -1,0 +1,22 @@
+---
+interface Props { compact?: boolean; light?: boolean; }
+const { compact = false, light = false } = Astro.props;
+---
+<a href="/" class="inline-flex items-center gap-3 no-underline" aria-label="Beranda Panduan Alun-Alun Batam Centre">
+  <svg viewBox="0 0 64 64" class="h-10 w-10 shrink-0" role="img" aria-label="Lambang Alun-Alun Batam Centre">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0" stop-color="#d4a84f" />
+        <stop offset="1" stop-color="#b76d45" />
+      </linearGradient>
+    </defs>
+    <path d="M32 3 42 22 61 32 42 42 32 61 22 42 3 32 22 22Z" fill="url(#g)"/>
+    <circle cx="32" cy="32" r="16" fill={light ? '#f7f3e8' : '#0f5f62'} />
+    <path d="M16 36c7-7 25-7 32 0" fill="none" stroke="#d4a84f" stroke-width="4" stroke-linecap="round"/>
+    <path d="M24 31h16l-8-11z" fill="#f7f3e8" opacity=".95"/>
+  </svg>
+  {!compact && <span class:list={["leading-tight", light ? "text-[#f7f3e8]" : "text-[#10242a]"]}>
+    <strong class="block font-serif text-[1.05rem] tracking-[-.02em]">Alun-Alun Batam Centre</strong>
+    <span class:list={["block text-[.64rem] font-bold uppercase tracking-[.16em]", light ? "text-white/60" : "text-[#607278]"]}>Panduan independen</span>
+  </span>}
+</a>
