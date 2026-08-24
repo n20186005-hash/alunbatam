@@ -3,8 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 export const prerender = true;
 
-const title = 'Alun-Alun Batam Centre — Panduan Dataran Engku Putri';
-const description = 'Panduan independen Alun-Alun Batam Centre atau Dataran Engku Putri: sejarah, akses, transportasi, fasilitas, waktu kunjungan, peta, dan pertanyaan umum.';
+const title = 'Alun Alun Batam Centre (Batam Centre Park) - Visitor Guide & Tips';
+const description = 'Complete visitor guide for Alun Alun Batam Centre (Batam Centre Park / Dataran Engku Putri): history, access, transport from Batam Centre Ferry Terminal, facilities, opening hours, map, and FAQs.';
 const imagePath = '/images/hero-alun-alun-batam.webp';
 const siteUrl = Astro.site;
 const pageUrl = siteUrl ? new URL('/', siteUrl).toString() : undefined;
@@ -15,8 +15,8 @@ const openingDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Sa
 const attractionSchema = {
   '@context': 'https://schema.org',
   '@type': ['TouristAttraction', 'LocalBusiness'],
-  name: 'Alun-Alun Batam Centre',
-  alternateName: 'Dataran Engku Putri',
+  name: 'Alun Alun Batam Centre',
+  alternateName: ['Dataran Engku Putri', 'Batam Centre Park'],
   description,
   ...(pageUrl ? { url: pageUrl } : {}),
   ...(imageUrl ? { image: [imageUrl] } : {}),
@@ -63,11 +63,11 @@ const faqs = [
   },
   {
     q: 'Berapa lama waktu kunjungan yang disarankan?',
-    a: 'Untuk mengenal alun-alun, berfoto, dan berjalan santai, siapkan sekitar satu hingga dua jam. Tambahkan waktu bila ingin menggabungkan kunjungan dengan museum, landmark, atau kegiatan publik di sekitar Batam Centre.',
+    a: 'Untuk mengenal Alun Alun Batam Centre (Batam Centre Park), berfoto, dan berjalan santai, siapkan sekitar satu hingga dua jam. Tambahkan waktu bila ingin menggabungkan kunjungan dengan museum, landmark, atau kegiatan publik di sekitar Batam Centre.',
   },
   {
     q: 'Bagaimana cara menuju alun-alun dari Bandara Hang Nadim?',
-    a: 'Pilihan paling sederhana adalah taksi resmi atau angkutan berbasis aplikasi. Pemerintah Kota Batam juga sedang mengintegrasikan Koridor Nongsa–Batam Centre Trans Batam dengan Bandara Hang Nadim; periksa status operasional dan halte terkini sebelum mengandalkan rute ini.',
+    a: 'Pilihan paling sederhana adalah taksi resmi atau angkutan berbasis aplikasi. Pemerintah Kota Batam juga sedang mengintegrasikan Koridor Nongsa–Batam Centre Trans Batam dengan Bandara Hang Nadim. Bila Anda tiba lewat Batam Centre Ferry Terminal, jarak menuju Alun Alun Batam Centre (Batam Centre Park) relatif dekat; periksa rute dan halte terkini sebelum mengandalkan satu moda.',
   },
   {
     q: 'Apakah ada tempat parkir?',
@@ -100,15 +100,15 @@ const faqSchema = {
 <BaseLayout title={title} description={description} image={imagePath} jsonLd={[attractionSchema, faqSchema]}>
   <section class="relative overflow-hidden bg-[#082f34] text-white">
     <div class="absolute inset-0">
-      <img src={imagePath} alt="Alun-Alun Batam Centre dengan ruang terbuka dan lingkungan pusat kota" class="h-full w-full object-cover opacity-55" fetchpriority="high" />
+      <img src={imagePath} alt="Alun Alun Batam Centre (Batam Centre Park) dengan ruang terbuka dan lingkungan pusat kota" class="h-full w-full object-cover opacity-55" fetchpriority="high" />
       <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,31,34,.93)_0%,rgba(5,31,34,.68)_48%,rgba(5,31,34,.2)_100%)]"></div>
       <div class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#082f34] to-transparent"></div>
     </div>
     <div class="container-shell relative grid min-h-[78vh] items-end gap-12 py-16 lg:grid-cols-[1.25fr_.75fr] lg:py-24">
       <div class="max-w-4xl">
         <p class="mb-5 inline-flex items-center gap-3 text-xs font-extrabold uppercase tracking-[.2em] text-[#f0cf82]"><span class="h-px w-10 bg-[#d4a84f]"></span> Ruang publik · Batam Kota</p>
-        <h1 class="font-[Georgia] text-[clamp(3.2rem,8vw,7.7rem)] font-normal leading-[.88] tracking-[-.055em]">Alun-Alun<br /><span class="text-[#f1d38e]">Batam Centre</span></h1>
-        <p class="mt-6 max-w-2xl text-lg leading-8 text-white/82">Dataran Engku Putri adalah ruang temu warga di jantung pusat pemerintahan Batam—tempat olahraga, acara kota, rekreasi keluarga, dan jejak sejarah Melayu bertemu dalam satu bentang perkotaan.</p>
+        <h1 class="font-[Georgia] text-[clamp(3.2rem,8vw,7.7rem)] font-normal leading-[.88] tracking-[-.055em]">Alun Alun Batam Centre<br /><span class="text-[#f1d38e]">(Batam Centre Park)</span></h1>
+        <p class="mt-6 max-w-2xl text-lg leading-8 text-white/82">Dataran Engku Putri (Batam Centre Park) adalah ruang temu warga di jantung pusat pemerintahan Batam—tempat olahraga, acara kota, rekreasi keluarga, dan jejak sejarah Melayu bertemu dalam satu bentang perkotaan.</p>
         <p class="mt-3 text-xs leading-5 text-white/55">Foto utama: Kementerian Pariwisata Republik Indonesia / Indonesia.travel.</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a class="btn-primary !bg-[#d4a84f] !text-[#17363a] hover:!bg-[#e2bd6d]" href="#rencana-kunjungan">Rencanakan kunjungan</a>
@@ -118,7 +118,7 @@ const faqSchema = {
       <aside class="card-dark !bg-[#0a4147]/82 p-6 backdrop-blur-xl lg:mb-2">
         <p class="rule-label !text-[#efcd7e]">Ringkas sebelum berangkat</p>
         <dl class="mt-5 divide-y divide-white/12 text-sm">
-          <div class="flex justify-between gap-5 py-3"><dt class="text-white/62">Nama lain</dt><dd class="text-right font-semibold">Dataran Engku Putri</dd></div>
+          <div class="flex justify-between gap-5 py-3"><dt class="text-white/62">Nama lain</dt><dd class="text-right font-semibold">Dataran Engku Putri · Batam Centre Park</dd></div>
           <div class="flex justify-between gap-5 py-3"><dt class="text-white/62">Karakter</dt><dd class="text-right font-semibold">Ruang publik kota</dd></div>
           <div class="flex justify-between gap-5 py-3"><dt class="text-white/62">Akses peta</dt><dd class="text-right font-semibold">Tercantum sepanjang hari*</dd></div>
           <div class="flex justify-between gap-5 py-3"><dt class="text-white/62">Tiket reguler</dt><dd class="text-right font-semibold">Tidak ditemukan</dd></div>
@@ -135,7 +135,7 @@ const faqSchema = {
       {[
         ['01', 'Ruang kota', 'Pusat pertemuan warga, olahraga, dan acara publik.'],
         ['02', 'Jejak Melayu', 'Nama Engku Putri mengingatkan pada tokoh Engku Hamidah.'],
-        ['03', 'Mudah dipadukan', 'Berada di kawasan Batam Centre yang terhubung dengan moda kota.'],
+        ['03', 'Mudah dipadukan', 'Berada di kawasan Batam Centre yang terhubung dengan moda kota dan dekat Batam Centre Ferry Terminal.'],
         ['04', 'Nonkomersial', 'Panduan ini tidak menerima komisi dan tidak merekomendasikan pedagang tertentu.'],
       ].map(([n, heading, copy]) => (
         <article class="bg-[#f7f3e8] p-6 md:p-7">
@@ -152,17 +152,17 @@ const faqSchema = {
       <div class="lg:sticky lg:top-28">
         <p class="eyebrow">Mengenal tempat</p>
         <h2 class="section-title mt-5">Bukan sekadar lapangan.</h2>
-        <p class="prose-copy mt-6 max-w-md">Alun-alun ini bekerja sebagai halaman bersama kota: terbuka, mudah dibaca, dan terus berubah mengikuti ritme masyarakat Batam.</p>
+        <p class="prose-copy mt-6 max-w-md">Alun Alun Batam Centre (Batam Centre Park) bekerja sebagai halaman bersama kota: terbuka, mudah dibaca, dan terus berubah mengikuti ritme masyarakat Batam.</p>
       </div>
       <div class="space-y-7">
         <div class="card p-7 md:p-9">
-          <p class="text-xl leading-9 text-[#2e454b]">Portal pariwisata nasional Indonesia menyebut Alun-Alun Batam—juga dikenal sebagai Dataran Engku Putri—sebagai <strong class="text-[#0a4147]">ruang publik utama Kota Batam</strong>. Letaknya berada di pusat pemerintahan, dengan fungsi untuk berkumpul, bersantai, berolahraga, kegiatan keluarga, serta acara budaya, hiburan, dan olahraga.</p>
+          <p class="text-xl leading-9 text-[#2e454b]">Portal pariwisata nasional Indonesia menyebut Alun Alun Batam Centre (Batam Centre Park)—juga dikenal sebagai Dataran Engku Putri—sebagai <strong class="text-[#0a4147]">ruang publik utama Kota Batam</strong>. Letaknya berada di pusat pemerintahan, dengan fungsi untuk berkumpul, bersantai, berolahraga, kegiatan keluarga, serta acara budaya, hiburan, dan olahraga.</p>
         </div>
         <div class="grid gap-5 md:grid-cols-2">
           <article class="card p-7">
             <div class="icon-box" aria-hidden="true">◎</div>
             <h3 class="mt-5 text-xl font-extrabold">Fungsi sipil yang hidup</h3>
-            <p class="mt-3 text-sm leading-7 text-[#607278]">Berita Pemerintah Kota Batam sepanjang 2026 menunjukkan Dataran Engku Putri tetap dipakai untuk peluncuran layanan publik, kegiatan olahraga, dan pertemuan warga berskala besar.</p>
+            <p class="mt-3 text-sm leading-7 text-[#607278]">Berita Pemerintah Kota Batam sepanjang 2026 menunjukkan Alun Alun Batam Centre (Batam Centre Park) / Dataran Engku Putri tetap dipakai untuk peluncuran layanan publik, kegiatan olahraga, dan pertemuan warga berskala besar.</p>
           </article>
           <article class="card p-7">
             <div class="icon-box" aria-hidden="true">◇</div>
@@ -277,7 +277,7 @@ const faqSchema = {
       <div class="mt-5 grid gap-10 lg:grid-cols-[.72fr_1.28fr]">
         <div>
           <h2 class="section-title">Menuju pusat Batam tanpa tebakan.</h2>
-          <p class="mt-6 max-w-lg text-base leading-8 text-white/68">Gunakan nama “Alun-Alun Batam Centre” atau “Dataran Engku Putri” pada aplikasi peta. Titik berada di Jl. Engku Putri, Teluk Tering, Kecamatan Batam Kota.</p>
+          <p class="mt-6 max-w-lg text-base leading-8 text-white/68">Gunakan nama “Alun Alun Batam Centre (Batam Centre Park)” atau “Dataran Engku Putri” pada aplikasi peta. Titik berada di Jl. Engku Putri, Teluk Tering, Kecamatan Batam Kota—berdekatan dengan kawasan Batam Centre Ferry Terminal.</p>
         </div>
         <div class="space-y-4">
           <article class="rounded-2xl border border-white/12 bg-white/6 p-6">
@@ -290,7 +290,7 @@ const faqSchema = {
             <div class="flex gap-4"><span class="text-2xl" aria-hidden="true">●</span><div><h3 class="text-xl font-extrabold">Taksi & angkutan berbasis aplikasi</h3><p class="mt-2 text-sm leading-7 text-white/68">Tetapkan titik turun di sisi jalan yang aman, hindari berhenti di jalur lalu lintas, dan konfirmasi identitas kendaraan sebelum naik. Untuk taksi, gunakan antrean atau operator resmi dan pastikan skema tarif dipahami sebelum perjalanan.</p></div></div>
           </article>
           <article class="rounded-2xl border border-white/12 bg-white/6 p-6">
-            <div class="flex gap-4"><span class="text-2xl" aria-hidden="true">≈</span><div><h3 class="text-xl font-extrabold">Dari terminal feri Batam Centre</h3><p class="mt-2 text-sm leading-7 text-white/68">Kawasan pelabuhan dan alun-alun sama-sama berada di Batam Centre. Pilihan perjalanan dapat berupa perjalanan singkat dengan taksi/angkutan aplikasi atau berjalan bila kondisi cuaca, barang bawaan, trotoar, dan kemampuan fisik memungkinkan. Gunakan peta untuk memilih penyeberangan yang aman.</p></div></div>
+            <div class="flex gap-4"><span class="text-2xl" aria-hidden="true">≈</span><div><h3 class="text-xl font-extrabold">Dari Batam Centre Ferry Terminal</h3><p class="mt-2 text-sm leading-7 text-white/68">Batam Centre Ferry Terminal dan Alun Alun Batam Centre (Batam Centre Park) sama-sama berada di kawasan inti Batam Centre. Pilihan perjalanan dapat berupa perjalanan singkat dengan taksi/angkutan aplikasi atau berjalan bila kondisi cuaca, barang bawaan, trotoar, dan kemampuan fisik memungkinkan. Gunakan peta untuk memilih penyeberangan yang aman menuju Dataran Engku Putri.</p></div></div>
           </article>
         </div>
       </div>
@@ -303,8 +303,8 @@ const faqSchema = {
         <p class="eyebrow">Peta lokasi</p>
         <h2 class="section-title mt-5">Titik rujukan di Teluk Tering.</h2>
         <p class="prose-copy mt-6">Peta berasal dari Google Maps dan dimuat hanya pada bagian ini. Bahasa serta wilayah peta tertanam disetel ke Indonesia.</p>
-        <address class="mt-6 not-italic text-sm leading-7 text-[#43565c]"><strong class="text-[#10242a]">Alun-Alun Batam Centre / Dataran Engku Putri</strong><br />43H3+CRQ, Jl. Engku Putri<br />Teluk Tering, Kec. Batam Kota<br />Kota Batam, Kepulauan Riau 29444</address>
-        <a class="btn-primary mt-6" href="https://www.google.com/maps/search/?api=1&query=43H3%2BCRQ%2C%20Jl.%20Engku%20Putri%2C%20Tlk.%20Tering%2C%20Kec.%20Batam%20Kota%2C%20Kota%20Batam%2C%20Kepulauan%20Riau%2029444%2C%20Indonesia" target="_blank" rel="noopener noreferrer">Buka di Google Maps <span aria-hidden="true">↗</span></a>
+        <address class="mt-6 not-italic text-sm leading-7 text-[#43565c]"><strong class="text-[#10242a]">Alun Alun Batam Centre (Batam Centre Park) / Dataran Engku Putri</strong><br />43H3+CRQ, Jl. Engku Putri<br />Teluk Tering, Kec. Batam Kota<br />Kota Batam, Kepulauan Riau 29444</address>
+        <a class="btn-primary mt-6" href="https://maps.app.goo.gl/t2RNgQw92cCG7Yh18" target="_blank" rel="noopener noreferrer">Buka di Google Maps <span aria-hidden="true">↗</span></a>
       </div>
       <div class="overflow-hidden rounded-[1.8rem] border border-black/10 bg-white shadow-[0_25px_70px_rgba(16,36,42,.12)]">
         <iframe title="Peta Alun-Alun Batam Centre" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6897.722464829787!2d104.05203871243594!3d1.1285985988558445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d9890456e5474d%3A0xee8d00d5385ae78e!2sAlun%20Alun%20Batam%20Centre!5e1!3m2!1sid!2sid!4v1787145062295!5m2!1sid!2sid" width="600" height="520" class="h-[520px] w-full" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
