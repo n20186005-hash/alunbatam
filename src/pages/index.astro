@@ -3,8 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 export const prerender = true;
 
-const title = 'Alun Alun Batam Centre (Batam Centre Park) - Visitor Guide & Tips';
-const description = 'Complete visitor guide for Alun Alun Batam Centre (Batam Centre Park / Dataran Engku Putri): history, access, transport from Batam Centre Ferry Terminal, facilities, opening hours, map, and FAQs.';
+const title = 'Alun Alun Batam Centre Batam — Panduan Wisata';
+const description = 'Panduan lengkap Alun Alun Batam Centre (Batam Centre Park / Dataran Engku Putri): sejarah, cara ke sana dari Ferry Terminal Batam Centre, fasilitas, jam akses, peta lokasi, dan FAQ. Ruang publik gratis & terbuka.';
 const imagePath = '/images/hero-alun-alun-batam.webp';
 const siteUrl = Astro.site;
 const pageUrl = siteUrl ? new URL('/', siteUrl).toString() : undefined;
@@ -39,11 +39,6 @@ const attractionSchema = {
     opens: '00:00',
     closes: '23:59',
   })),
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.5',
-    bestRating: '5',
-  },
   isAccessibleForFree: true,
   publicAccess: true,
 };

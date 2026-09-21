@@ -13,6 +13,7 @@ const { title, description, image = '/images/hero-alun-alun-batam.webp', jsonLd 
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 const absoluteImage = Astro.site ? new URL(image, Astro.site).toString() : image;
 const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const SITE_NAME = 'Alun Alun Batam Centre Batam — Panduan Wisata';
 ---
 <!doctype html>
 <html lang="id">
@@ -25,6 +26,7 @@ const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
     {canonical && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="id_ID" />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteImage} />
