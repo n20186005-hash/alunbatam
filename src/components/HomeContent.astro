@@ -1,0 +1,285 @@
+---
+import { getContent } from '../content';
+import {
+  ATTRACTION_FULL_NAME,
+  ATTRACTION_LOCAL_NAME,
+  ATTRACTION_SHORT_NAME,
+  CITY_GOV_URL,
+  DISTRICT_NAME,
+  GOVT_TOURISM_LABEL,
+  GOVT_TOURISM_URL,
+  HERO_IMAGE,
+  HERO_IMAGE_ALT,
+  MAPS_EMBED_SRC,
+  MAPS_SHARE_URL,
+  NATIONAL_TOURISM_URL,
+  POSTAL_CODE,
+  STATE_PROVINCE,
+  STREET_ADDRESS,
+} from '../data/site';
+import type { Locale } from '../i18n';
+import EventsInfo from './EventsInfo.astro';
+import HistoryDeepDive from './HistoryDeepDive.astro';
+import Itineraries from './Itineraries.astro';
+import SeasonalStrategy from './SeasonalStrategy.astro';
+import SourcesSection from './SourcesSection.astro';
+import TransportGuide from './TransportGuide.astro';
+import VisitorResponsibility from './VisitorResponsibility.astro';
+import VisitorServices from './VisitorServices.astro';
+import WeatherSection from './WeatherSection.astro';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'id' } = Astro.props;
+const t = getContent(lang);
+const homePath = lang === 'en' ? '/en/' : '/';
+const langSuffix = lang === 'en' ? ' di Kota Batam' : '';
+---
+
+<section class="relative overflow-hidden bg-[#082f34] text-white">
+  <div class="absolute inset-0">
+    <img src={HERO_IMAGE} alt={HERO_IMAGE_ALT} width="1000" height="750" class="h-full w-full object-cover opacity-55" fetchpriority="high" />
+    <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,31,34,.93)_0%,rgba(5,31,34,.68)_48%,rgba(5,31,34,.2)_100%)]"></div>
+    <div class="absolute inset-x-0 bottom-0 h-52 bg-gradient-to-t from-[#082f34] to-transparent"></div>
+  </div>
+  <div class="container-shell relative grid min-h-[78vh] items-end gap-12 py-16 lg:grid-cols-[1.25fr_.75fr] lg:py-24">
+    <div class="max-w-4xl">
+      <nav aria-label="Breadcrumb" class="mb-5 flex flex-wrap items-center gap-2 text-[.68rem] font-bold uppercase tracking-[.14em] text-white/62">
+        <a class="underline decoration-[#d4a84f] underline-offset-4 hover:text-white" href={homePath}>{t.hero.breadcrumbHome}</a>
+        <span aria-hidden="true">/</span>
+        <span>{t.meta.geo.country}</span>
+        <span aria-hidden="true">/</span>
+        <span>{t.meta.geo.province}</span>
+        <span aria-hidden="true">/</span>
+        <span>{t.meta.geo.city}</span>
+        <span aria-hidden="true">/</span>
+        <span class="text-[#f0cf82]">{ATTRACTION_FULL_NAME}</span>
+      </nav>
+      <p class="mb-5 inline-flex items-center gap-3 text-xs font-extrabold uppercase tracking-[.2em] text-[#f0cf82]"><span class="h-px w-10 bg-[#d4a84f]"></span> {t.hero.eyebrow}</p>
+      <h1 class="font-[Georgia] text-[clamp(3.2rem,8vw,7.7rem)] font-normal leading-[.88] tracking-[-.055em]">{t.hero.titleLine1}<br /><span class="text-[#f1d38e]">{t.hero.titleLine2}</span><span class="mt-4 block font-sans text-[0.8rem] font-extrabold uppercase leading-5 tracking-[.18em] text-white/68">{t.hero.cityLine}</span></h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-white/82">{t.hero.lede}</p>
+      <p class="mt-3 text-xs leading-5 text-white/55">{t.hero.photoCredit}</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a class="btn-primary !bg-[#d4a84f] !text-[#17363a] hover:!bg-[#e2bd6d]" href="#rencana-kunjungan">{t.hero.ctaPlan}</a>
+        <a class="btn-ghost !border-white/25 !bg-white/8 !text-white hover:!bg-white/16" href="#sejarah">{t.hero.ctaHistory}</a>
+      </div>
+    </div>
+    <aside class="card-dark !bg-[#0a4147]/82 p-6 backdrop-blur-xl lg:mb-2">
+      <p class="rule-label !text-[#efcd7e]">{t.hero.factsTitle}</p>
+      <dl class="mt-5 divide-y divide-white/12 text-sm">
+        {t.hero.facts.map((item) => (
+          <div class="flex justify-between gap-5 py-3"><dt class="text-white/62">{item.label}</dt><dd class="text-right font-semibold">{item.value}</dd></div>
+        ))}
+      </dl>
+      <p class="mt-4 text-xs leading-5 text-white/55">{t.hero.factsNote}</p>
+    </aside>
+  </div>
+</section>
+
+<section class="border-b border-black/8 bg-[#f1eadb]">
+  <div class="container-shell grid gap-px overflow-hidden border-x border-black/8 bg-black/8 md:grid-cols-4">
+    {t.factsStrip.map((item) => (
+      <article class="bg-[#f7f3e8] p-6 md:p-7">
+        <p class="font-[Georgia] text-4xl text-[#d4a84f]">{item.n}</p>
+        <h2 class="mt-5 text-lg font-extrabold">{item.heading}</h2>
+        <p class="mt-2 text-sm leading-6 text-[#607278]">{item.copy}</p>
+      </article>
+    ))}
+  </div>
+</section>
+
+<section id="tentang" class="section-pad">
+  <div class="container-shell grid items-start gap-12 lg:grid-cols-[.8fr_1.2fr]">
+    <div class="lg:sticky lg:top-28">
+      <p class="eyebrow">{t.tentang.eyebrow}</p>
+      <h2 class="section-title mt-5">{t.tentang.h2}</h2>
+      <p class="prose-copy mt-6 max-w-md">{t.tentang.lede}</p>
+      <p class="prose-copy mt-4 max-w-md">{t.tentang.welcome}</p>
+      <p class="mt-4 text-xs font-bold uppercase tracking-[.14em] text-[#78868a]">{t.tentang.hierarchy}</p>
+    </div>
+    <div class="space-y-7">
+      <div class="card p-7 md:p-9">
+        <p class="text-xl leading-9 text-[#2e454b]">{t.tentang.quote}</p>
+      </div>
+      <div class="grid gap-5 md:grid-cols-2">
+        {t.tentang.cards.map((card) => (
+          <article class="card p-7">
+            <div class="icon-box" aria-hidden="true">{card.icon}</div>
+            <h3 class="mt-5 text-xl font-extrabold">{card.title}</h3>
+            <p class="mt-3 text-sm leading-7 text-[#607278]">{card.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sejarah" class="section-pad bg-[#0a4147] text-white">
+  <div class="container-shell grid gap-10 lg:grid-cols-[1fr_1fr]">
+    <div>
+      <p class="eyebrow !text-[#e9c976]">{t.sejarah.eyebrow}</p>
+      <h2 class="section-title mt-5 max-w-2xl">{t.sejarah.h2}</h2>
+      <div class="mt-8 h-px w-24 bg-[#d4a84f]"></div>
+    </div>
+    <div class="space-y-6 text-base leading-8 text-white/78">
+      {t.sejarah.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      <div class="rounded-2xl border border-white/15 bg-white/6 p-5 text-sm leading-7 text-white/66">
+        <strong class="text-[#efcd7e]">{t.sejarah.note.split(':')[0]}:</strong>
+        {t.sejarah.note.split(':').slice(1).join(':').trim()}
+      </div>
+    </div>
+  </div>
+</section>
+
+<HistoryDeepDive lang={lang} />
+
+<section class="section-pad">
+  <div class="container-shell">
+    <div class="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+      <div>
+        <p class="eyebrow">{t.gallery.eyebrow}</p>
+        <h2 class="section-title mt-5">{t.gallery.h2}</h2>
+      </div>
+      <p class="max-w-md text-sm leading-6 text-[#607278]">{t.gallery.note}</p>
+    </div>
+    <div class="mt-10 grid gap-4 md:grid-cols-12">
+      <figure class="malay-frame overflow-hidden rounded-[1.8rem] md:col-span-7 md:row-span-2">
+        <img src={t.gallery.images[0].src} alt={t.gallery.images[0].alt} width="720" height="441" class="h-full min-h-[420px] w-full object-cover" loading="lazy" />
+        <figcaption class="absolute inset-x-4 bottom-4 rounded-xl bg-black/62 px-4 py-3 text-xs text-white/80 backdrop-blur">{t.gallery.images[0].caption}</figcaption>
+      </figure>
+      <figure class="relative overflow-hidden rounded-[1.8rem] md:col-span-5">
+        <img src={t.gallery.images[1].src} alt={t.gallery.images[1].alt} width="750" height="500" class="h-[260px] w-full object-cover" loading="lazy" />
+        <figcaption class="absolute inset-x-4 bottom-4 rounded-xl bg-black/62 px-4 py-3 text-xs text-white/80 backdrop-blur">{t.gallery.images[1].caption}</figcaption>
+      </figure>
+      <figure class="relative overflow-hidden rounded-[1.8rem] md:col-span-5">
+        <img src={t.gallery.images[2].src} alt={t.gallery.images[2].alt} width="1311" height="769" class="h-[260px] w-full object-cover" loading="lazy" />
+        <figcaption class="absolute inset-x-4 bottom-4 rounded-xl bg-black/62 px-4 py-3 text-xs text-white/80 backdrop-blur">{t.gallery.images[2].caption}</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="rencana-kunjungan" class="section-pad bg-[#efe7d7]">
+  <div class="container-shell">
+    <p class="eyebrow">{t.plan.eyebrow}</p>
+    <div class="mt-5 grid gap-10 lg:grid-cols-[.75fr_1.25fr]">
+      <div>
+        <h2 class="section-title">{t.plan.h2}</h2>
+        <p class="prose-copy mt-6">{t.plan.lede}</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {t.plan.cards.map((card) => (
+          <article class="card p-6">
+            <div class="icon-box font-bold" aria-hidden="true">{card.icon}</div>
+            <h3 class="mt-4 text-lg font-extrabold">{card.title}</h3>
+            <p class="mt-2 text-sm leading-6 text-[#607278]">{card.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<WeatherSection lang={lang} />
+
+<VisitorServices lang={lang} />
+
+<TransportGuide lang={lang} />
+
+<section class="section-pad">
+  <div class="container-shell grid gap-10 lg:grid-cols-[.9fr_1.1fr]">
+    <div>
+      <p class="eyebrow">{t.location.eyebrow}</p>
+      <h2 class="section-title mt-5">{t.location.h2}</h2>
+      <p class="prose-copy mt-6">{t.location.lede}</p>
+      <address class="mt-6 not-italic text-sm leading-7 text-[#43565c]">
+        <strong class="text-[#10242a]">{ATTRACTION_FULL_NAME} ({ATTRACTION_SHORT_NAME}) / {ATTRACTION_LOCAL_NAME}</strong><br />{STREET_ADDRESS}<br />{DISTRICT_NAME}<br />{t.meta.geo.city}, {STATE_PROVINCE} {POSTAL_CODE}, {t.meta.geo.country}
+      </address>
+      <p class="mt-4 text-xs font-bold uppercase tracking-[.14em] text-[#78868a]">{t.location.hierarchy}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a class="btn-primary" href={MAPS_SHARE_URL} target="_blank" rel="noopener noreferrer">{t.location.mapBtn} <span aria-hidden="true">↗</span></a>
+        <a class="btn-ghost" href={GOVT_TOURISM_URL} target="_blank" rel="noopener noreferrer">{t.location.govBtn} <span aria-hidden="true">↗</span></a>
+      </div>
+      <p class="mt-5 text-sm leading-7 text-[#607278]">
+        {t.location.govNote}{' '}
+        <a class="font-bold text-[#0f5f62] underline decoration-[#d4a84f] underline-offset-4" href={NATIONAL_TOURISM_URL} target="_blank" rel="noopener noreferrer">indonesia.travel</a>.
+      </p>
+    </div>
+    <div class="overflow-hidden rounded-[1.8rem] border border-black/10 bg-white shadow-[0_25px_70px_rgba(16,36,42,.12)]">
+      <iframe title={`Peta ${ATTRACTION_FULL_NAME} (${ATTRACTION_SHORT_NAME})${langSuffix}`} src={MAPS_EMBED_SRC} width="600" height="520" class="h-[520px] w-full" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    </div>
+  </div>
+</section>
+
+<SeasonalStrategy lang={lang} />
+
+<Itineraries lang={lang} />
+
+<EventsInfo lang={lang} />
+
+<section class="section-pad bg-[#efe7d7]">
+  <div class="container-shell">
+    <div class="grid gap-10 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow">{t.surroundings.kuliner.eyebrow}</p>
+        <h2 class="section-title mt-5">{t.surroundings.kuliner.h2}</h2>
+        <p class="prose-copy mt-6">{t.surroundings.kuliner.lede}</p>
+        <div class="mt-7 flex flex-wrap gap-2">
+          {t.surroundings.kuliner.pills.map((item) => <span class="pill">{item}</span>)}
+        </div>
+        <p class="mt-5 text-sm leading-7 text-[#607278]">{t.surroundings.kuliner.note}</p>
+      </div>
+      <div>
+        <p class="eyebrow">{t.surroundings.landmarks.eyebrow}</p>
+        <h2 class="section-title mt-5">{t.surroundings.landmarks.h2}</h2>
+        <p class="prose-copy mt-6">{t.surroundings.landmarks.lede}</p>
+        <div class="mt-7 space-y-3">
+          {t.surroundings.landmarks.items.map((item, i) => (
+            <article class="flex gap-5 rounded-2xl border border-black/8 bg-white/55 p-5">
+              <span class="kicker-num !text-4xl">0{i + 1}</span>
+              <div><h3 class="font-extrabold">{item.name}</h3><p class="mt-1 text-sm leading-6 text-[#607278]">{item.copy}</p></div>
+            </article>
+          ))}
+        </div>
+        <p class="mt-4 text-xs leading-5 text-[#78868a]">{t.surroundings.landmarks.note}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad">
+  <div class="container-shell">
+    <div class="max-w-3xl">
+      <p class="eyebrow">{t.ethics.eyebrow}</p>
+      <h2 class="section-title mt-5">{t.ethics.h2}</h2>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      {t.ethics.items.map((item) => (
+        <article class="card p-7"><span class="kicker-num">{item.kicker}</span><h3 class="mt-5 text-lg font-extrabold">{item.title}</h3><p class="mt-2 text-sm leading-7 text-[#607278]">{item.body}</p></article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<VisitorResponsibility lang={lang} />
+
+<section id="faq" class="section-pad bg-[#0c3d42] text-white">
+  <div class="container-shell grid gap-12 lg:grid-cols-[.7fr_1.3fr]">
+    <div>
+      <p class="eyebrow !text-[#e9c976]">{t.faq.eyebrow}</p>
+      <h2 class="section-title mt-5">{t.faq.h2}</h2>
+      <p class="mt-6 max-w-md text-sm leading-7 text-white/65">{t.faq.lede}</p>
+    </div>
+    <div class="divide-y divide-white/12 border-y border-white/12">
+      {t.faq.items.map((item) => (
+        <details class="group py-5">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-5 font-extrabold"><span>{item.q}</span><span class="text-2xl font-light text-[#e9c976] transition-transform group-open:rotate-45" aria-hidden="true">+</span></summary>
+          <p class="max-w-3xl pt-3 text-sm leading-7 text-white/68">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<SourcesSection lang={lang} />

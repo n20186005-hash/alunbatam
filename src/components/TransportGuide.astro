@@ -1,0 +1,50 @@
+---
+import { getContent } from '../content';
+import type { Locale } from '../i18n';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'id' } = Astro.props;
+const t = getContent(lang);
+---
+
+<section id="transportasi" class="section-pad bg-[#0a3035] text-white">
+  <div class="container-shell">
+    <p class="eyebrow !text-[#e9c976]">{t.transport.eyebrow}</p>
+    <div class="mt-5 grid gap-10 lg:grid-cols-[.72fr_1.28fr]">
+      <div>
+        <h2 class="section-title">{t.transport.h2}</h2>
+        <p class="mt-6 max-w-lg text-base leading-8 text-white/68">{t.transport.lede}</p>
+        <div class="mt-8 rounded-2xl border border-white/12 bg-white/6 p-6">
+          <p class="rule-label !text-[#e9c976]">{t.transport.modesTitle}</p>
+          <ul class="mt-4 space-y-3 text-sm leading-7 text-white/70">
+            {t.transport.modes.map((row) => <li><strong class="text-white">{row.mode}</strong><br />{row.best} — {row.note}</li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="space-y-4">
+        {
+          t.transport.routes.map((route) => (
+            <article class="rounded-2xl border border-white/12 bg-white/6 p-6">
+              <div class="flex gap-4">
+                <span class="text-2xl" aria-hidden="true">{route.icon}</span>
+                <div>
+                  <h3 class="text-xl font-extrabold">{route.title}</h3>
+                  <p class="mt-2 text-sm leading-7 text-white/68">{route.body}</p>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-[1.8rem] border border-white/12 bg-white/6 p-7">
+      <p class="rule-label !text-[#e9c976]">{t.transport.tipsTitle}</p>
+      <ul class="mt-4 space-y-2 text-sm leading-7 text-white/70">
+        {t.transport.tips.map((tip) => <li>· {tip}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>

@@ -1,9 +1,44 @@
+# Dependensi
 node_modules/
+
+# Hasil build (deploy manual ke Cloudflare Workers)
 dist/
-.astro/
+dist-static/
 .wrangler/
+.wrangler-out/
+.astro/
+.open-next/
+
+# Konfigurasi sementara untuk verifikasi lokal
+astro.config.static.mjs
+astro.config.*.mjs
+!astro.config.mjs
+
+# Rahasia & lingkungan
 .dev.vars
 .env
 .env.*
 !.env.example
+
+# Log & cache
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage/
+.cache/
+.temp/
+tmp/
+
+# Python (pembuat ikon)
+__pycache__/
+*.py[cod]
+.venv/
+
+# Sistem & editor
 .DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp

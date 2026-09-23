@@ -1,0 +1,15 @@
+---
+import HomeContent from '../../components/HomeContent.astro';
+import { getContent } from '../../content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { homeSchemas } from '../../lib/schema';
+
+export const prerender = true;
+
+const t = getContent('en');
+const jsonLd = homeSchemas('en');
+---
+
+<BaseLayout title={t.meta.title} description={t.meta.description} locale="en" jsonLd={jsonLd}>
+  <HomeContent lang="en" />
+</BaseLayout>

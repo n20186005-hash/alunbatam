@@ -1,0 +1,49 @@
+---
+import { getContent } from '../content';
+import type { LegalDoc } from '../content/types';
+import type { Locale } from '../i18n';
+
+interface Props {
+  doc: LegalDoc;
+  lang?: Locale;
+  title: string;
+  description: string;
+  homeLabel: string;
+  homeHref: string;
+}
+const { doc, lang = 'id', title, description, homeLabel, homeHref } = Astro.props;
+---
+
+<section class="border-b border-black/8 bg-[#0a4147] py-16 text-white md:py-24">
+  <div class="container-shell max-w-4xl">
+    <p class="eyebrow !text-[#e9c976]">{doc.eyebrow}</p>
+    <h1 class="section-title mt-5">{doc.title}</h1>
+    <p class="mt-5 text-sm text-white/60">{doc.updated}</p>
+  </div>
+</section>
+<section class="section-pad !pt-12">
+  <article class="legal container-shell max-w-4xl">
+    <nav class="mb-6 text-sm text-[#607278]" aria-label="Breadcrumb">
+      <a class="font-bold text-[#0f5f62] underline decoration-[#d4a84f] underline-offset-4" href={homeHref}>{homeLabel}</a>
+      <span aria-hidden="true"> / </span>
+      <span>{doc.title}</span>
+    </nav>
+    <p>{doc.intro}</p>
+    {
+      doc.blocks.map((block) => (
+        <div>
+          {block.h2 && <h2>{block.h2}</h2>}
+          {block.h3 && <h3>{block.h3}</h3>}
+          {block.paragraphs?.map((paragraph) => <p>{paragraph}</p>)}
+          {block.list && (
+            <ul>
+              {block.list.map((item) => <li>{item}</li>)}
+            </ul>
+          )}
+          {block.highlight && <div class="mt-10 rounded-2xl border border-black/8 bg-[#efe7d7] p-6 text-sm leading-7"><strong>{block.highlight}</strong></div>}
+        </div>
+      ))
+    }
+    <slot />
+  </article>
+</section>

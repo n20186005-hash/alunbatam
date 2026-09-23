@@ -12,12 +12,23 @@ Situs informasi wisata independen dan nirlaba untuk **Alun-Alun Batam Centre / D
 
 Versi dependensi di `package.json` ditulis sebagai versi tepat, bukan rentang mengambang. Versi Node dipatok melalui `engines.node` dan `.node-version`.
 
+## Kanonisasi URL (wajib di Cloudflare)
+
+Tag `<link rel="canonical">` sudah diterbitkan otomatis di setiap halaman dari `Astro.site`. Pengalihan tingkat domain **tidak** bisa dilakukan dari `_redirects` pada Workers static assets, jadi selesaikan dua hal berikut di dasbor Cloudflare:
+
+1. **HTTP → HTTPS**: SSL/TLS → Edge Certificates → aktifkan **Always Use HTTPS** (301).
+2. **www → apex**: pastikan ada record DNS `www` berstatus proxied, lalu buat **Redirect Rule**:
+   - kondisi: `http.host eq "www.alunbatam.com"`
+   - aksi: **Forwarding URL, status 301** → `https://alunbatam.com/<path>` (query string dipertahankan).
+
+Halaman dokumen (`/kebijakan-privasi/`, `/ketentuan-layanan/`, `/pengaturan-cookie/`) memakai `noindex, follow` dan otomatis dikeluarkan dari sitemap supaya anggaran perayapan terkonsentrasi ke halaman panduan.
+
 ## Domain hanya di satu tempat
 
 Domain final diisi pada konstanta `SITE_URL` di `astro.config.mjs`.
 
 ```js
-const SITE_URL = '';
+const SITE_URL = 'https://alunbatam.com';
 ```
 
 Selama kosong:
@@ -30,6 +41,25 @@ Selama kosong:
 - tidak ada domain contoh atau localhost yang disisipkan sebagai cadangan.
 
 Setelah domain final tersedia, isi `SITE_URL` sekali lalu bangun ulang. Canonical, Open Graph, JSON-LD, dan sitemap akan mengikuti nilai `Astro.site`.
+
+## Entitas atraksi terpusat
+
+Fakta entitas—nama resmi, nama alternatif (`Batam Centre Park`, `Dataran Engku Putri`), alamat, Plus Code, koordinat, tautan peta, landmark sekitar, cuplikan rating, dan sumber resmi—didefinisikan sekali di `src/data/site.ts`. Nilai tersebut dipakai bersama oleh JSON-LD, judul/deskripsi, breadcrumb, peta tertanam, galeri, dan blok sumber. Pembangun JSON-LD berada di `src/lib/schema.ts`: `breadcrumbSchema`, `websiteSchema`, `webPageSchema`.
+
+## PWA
+
+- `public/site.webmanifest` — `start_url` `/`, `display: standalone`, tema `#0a4147`
+- `public/sw.js` — permintaan navigasi network-first, aset statis cache-first
+- Ikon `public/icons/icon-192.png`, `icon-512.png`, `icon-512-maskable.png` dibuat ulang dengan `python scripts/gen-pwa-icons.py`
+- `public/_headers` menetapkan `no-cache` untuk `/sw.js`
+
+## Modul cuaca
+
+Prakiraan diambil di sisi server oleh Komponen Server (`server:defer`), lalu disimpan sementara di cache runtime sebelum ditampilkan. Antarmuka hanya menyajikan ringkasan praktis—suhu, terasa seperti, kelembapan, angin, curah hujan, indeks UV, prakiraan harian, serta saran kunjungan yang diturunkan dari angka tersebut—tanpa menyebut penyedia data atau detail teknis apa pun. Bila data tidak tersedia, halaman menampilkan pesan netral dan mengarahkan pembaca ke kanal peringatan dini resmi BMKG.
+
+Berkas terkait: `src/lib/weather.ts` (pengambilan, pemetaan kode cuaca, skala Beaufort, penyusun saran) dan `src/components/WeatherSection.astro` (tampilan).
+
+Saran disusun dengan aturan bersyarat—hujan, panas, angin, kabut, dan sinar ultraviolet—lalu dibagi ke empat blok: peringatan (hanya muncul bila relevan), pakaian, pengaturan kunjungan, dan barang bawaan. Bila ada peringatan, saran umum otomatis dipangkas agar pesan keselamatan tidak tenggelam. Kalimat diupayakan bebas istilah teknis: kelembapan dan peluang hujan diterjemahkan ke bahasa sehari-hari.
 
 ## Pengembangan
 
@@ -61,6 +91,8 @@ Konfigurasi Worker sengaja minimal. Astro Cloudflare adapter menghasilkan konfig
 ```bash
 pnpm deploy
 ```
+
+Perintah di atas menjalankan `astro build` lalu `wrangler deploy` dari direktori proyek. Konfigurasi Worker yang dipakai adalah berkas yang dihasilkan adapter pada saat build (`dist/server/wrangler.json`, direferensikan melalui `.wrangler/deploy/config.json`)—karena itu `wrangler.jsonc` di root sengaja dibiarkan minimal dan tidak perlu diisi `main` atau `assets` secara manual.
 
 Proyek menetapkan `session: false` karena tidak menggunakan login atau sesi pengguna.
 

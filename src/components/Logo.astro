@@ -1,9 +1,18 @@
 ---
-interface Props { compact?: boolean; light?: boolean; }
-const { compact = false, light = false } = Astro.props;
+import { getContent } from '../content';
+import type { Locale } from '../i18n';
+
+interface Props {
+  compact?: boolean;
+  light?: boolean;
+  lang?: Locale;
+}
+const { compact = false, light = false, lang = 'id' } = Astro.props;
+const t = getContent(lang);
 ---
-<a href="/" class="inline-flex items-center gap-3 no-underline" aria-label="Beranda Panduan Alun-Alun Batam Centre">
-  <svg viewBox="0 0 64 64" class="h-10 w-10 shrink-0" role="img" aria-label="Lambang Alun-Alun Batam Centre">
+
+<a href={lang === 'en' ? '/en/' : '/'} class="inline-flex items-center gap-3 no-underline" aria-label={t.logo.homeAria}>
+  <svg viewBox="0 0 64 64" class="h-10 w-10 shrink-0" role="img" aria-label={t.logo.markAria}>
     <defs>
       <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
         <stop offset="0" stop-color="#d4a84f" />
@@ -16,7 +25,7 @@ const { compact = false, light = false } = Astro.props;
     <path d="M24 31h16l-8-11z" fill="#f7f3e8" opacity=".95"/>
   </svg>
   {!compact && <span class:list={["leading-tight", light ? "text-[#f7f3e8]" : "text-[#10242a]"]}>
-    <strong class="block font-serif text-[1.05rem] tracking-[-.02em]">Alun-Alun Batam Centre</strong>
-    <span class:list={["block text-[.64rem] font-bold uppercase tracking-[.16em]", light ? "text-white/60" : "text-[#607278]"]}>Panduan independen</span>
+    <strong class="block font-serif text-[1.05rem] tracking-[-.02em]">{t.logo.name}</strong>
+    <span class:list={["block text-[.64rem] font-bold uppercase tracking-[.16em]", light ? "text-white/60" : "text-[#607278]"]}>{t.logo.tagline}</span>
   </span>}
 </a>

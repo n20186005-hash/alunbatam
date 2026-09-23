@@ -2,40 +2,82 @@
 import '../styles/global.css';
 import Footer from '../components/Footer.astro';
 import Logo from '../components/Logo.astro';
+import { getContent } from '../content';
+import { ATTRACTION_FULL_NAME, CITY_NAME, HERO_IMAGE, HERO_IMAGE_ALT, LATITUDE, LONGITUDE, THEME_COLOR } from '../data/site';
+import { DEFAULT_LOCALE, HREFLANG, HTML_LANG, LOCALES, OG_LOCALE, switchLocalePath } from '../i18n';
 
 interface Props {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
   jsonLd?: unknown | unknown[];
+  /** Halaman dokumen (privasi/kuki/ketentuan) tidak perlu menghabiskan anggaran perayapan. */
+  noIndex?: boolean;
+  locale?: (typeof LOCALES)[number];
 }
-const { title, description, image = '/images/hero-alun-alun-batam.webp', jsonLd } = Astro.props;
+const {
+  title,
+  description,
+  image = HERO_IMAGE,
+  imageAlt = HERO_IMAGE_ALT,
+  jsonLd,
+  noIndex = false,
+  locale = DEFAULT_LOCALE,
+} = Astro.props;
+const t = getContent(locale);
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 const absoluteImage = Astro.site ? new URL(image, Astro.site).toString() : image;
 const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
-const SITE_NAME = 'Alun Alun Batam Centre Batam — Panduan Wisata';
+const origin = Astro.site ? Astro.site.origin : '';
+const alternates = LOCALES.map((code) => ({
+  code,
+  href: origin ? `${origin}${switchLocalePath(Astro.url.pathname, code)}` : undefined,
+}));
+const otherLocale = LOCALES.find((code) => code !== locale) ?? DEFAULT_LOCALE;
+const switchHref = switchLocalePath(Astro.url.pathname, otherLocale);
 ---
+
 <!doctype html>
-<html lang="id">
+<html lang={HTML_LANG[locale]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0a4147" />
+    <meta name="theme-color" content={THEME_COLOR} />
     <title>{title}</title>
     {canonical && <link rel="canonical" href={canonical} />}
+    {noIndex && <meta name="robots" content="noindex, follow" />}
+    {alternates.map((item) => item.href && <link rel="alternate" hreflang={HREFLANG[item.code]} href={item.href} />)}
+    {origin && <link rel="alternate" hreflang="x-default" href={`${origin}${switchLocalePath(Astro.url.pathname, DEFAULT_LOCALE)}`} />}
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="id_ID" />
-    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content={OG_LOCALE[locale]} />
+    {LOCALES.filter((code) => code !== locale).map((code) => (
+      <meta property="og:locale:alternate" content={OG_LOCALE[code]} />
+    ))}
+    <meta property="og:site_name" content={t.meta.siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={absoluteImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:type" content="image/webp" />
     {canonical && <meta property="og:url" content={canonical} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="geo.region" content="ID-KR" />
+    <meta name="geo.placename" content={`${ATTRACTION_FULL_NAME}, ${CITY_NAME}`} />
+    <meta name="ICBM" content={`${LATITUDE.toFixed(6)}, ${LONGITUDE.toFixed(6)}`} />
     <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
     <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" type="image/png" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Alun-Alun Batam" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     {jsonLdItems.map((item) => <script type="application/ld+json" set:html={JSON.stringify(item)} />)}
     <script is:inline>
       (() => {
@@ -58,17 +100,26 @@ const SITE_NAME = 'Alun Alun Batam Centre Batam — Panduan Wisata';
   <body>
     <header class="sticky top-0 z-50 border-b border-black/5 bg-[#f9f6ed]/90 backdrop-blur-xl">
       <div class="container-shell flex h-[74px] items-center justify-between gap-6">
-        <Logo />
-        <nav class="hidden items-center gap-6 text-sm font-semibold text-[#43565c] md:flex" aria-label="Navigasi utama">
-          <a class="hover:text-[#0f5f62]" href="/#tentang">Tentang</a>
-          <a class="hover:text-[#0f5f62]" href="/#rencana-kunjungan">Rencana Kunjungan</a>
-          <a class="hover:text-[#0f5f62]" href="/#transportasi">Transportasi</a>
-          <a class="hover:text-[#0f5f62]" href="/#faq">Pertanyaan umum</a>
+        <Logo lang={locale} />
+        <nav class="hidden items-center gap-6 text-sm font-semibold text-[#43565c] lg:flex" aria-label="Navigasi utama">
+          <a class="hover:text-[#0f5f62]" href={locale === 'en' ? '/en/#tentang' : '/#tentang'}>{t.nav.tentang}</a>
+          <a class="hover:text-[#0f5f62]" href={locale === 'en' ? '/en/#cuaca' : '/#cuaca'}>{t.nav.cuaca}</a>
+          <a class="hover:text-[#0f5f62]" href={locale === 'en' ? '/en/#transportasi' : '/#transportasi'}>{t.nav.transportasi}</a>
+          <a class="hover:text-[#0f5f62]" href={locale === 'en' ? '/en/#faq' : '/#faq'}>{t.nav.faq}</a>
+          <a class="hover:text-[#0f5f62]" href={switchHref} hreflang={HREFLANG[otherLocale]} aria-label={t.nav.languageSwitch}>{otherLocale === 'en' ? 'EN' : 'ID'}</a>
         </nav>
-        <a href="https://maps.app.goo.gl/t2RNgQw92cCG7Yh18" rel="noopener noreferrer" target="_blank" class="btn-primary hidden sm:inline-flex">Buka peta <span aria-hidden="true">↗</span></a>
+        <a href="https://maps.app.goo.gl/t2RNgQw92cCG7Yh18" rel="noopener noreferrer" target="_blank" class="btn-primary hidden sm:inline-flex">{t.nav.map} <span aria-hidden="true">↗</span></a>
       </div>
     </header>
     <main><slot /></main>
-    <Footer />
+    <Footer lang={locale} />
+    <script is:inline>
+      (() => {
+        if (!('serviceWorker' in navigator)) return;
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+      })();
+    </script>
   </body>
 </html>

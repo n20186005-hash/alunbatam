@@ -1,62 +1,29 @@
 ---
+import LegalPage from '../components/LegalPage.astro';
+import { getContent } from '../content';
+import { SITE_URL } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { breadcrumbSchema, webPageSchema } from '../lib/schema';
+
 export const prerender = true;
-const title = 'Ketentuan Layanan — Panduan Alun-Alun Batam Centre';
+
+const t = getContent('id');
+const doc = t.legal.terms;
+const title = `${doc.title} | ${t.meta.siteName}`;
 const description = 'Ketentuan penggunaan Panduan Alun-Alun Batam Centre, situs informasi wisata independen dan nirlaba.';
+const pageUrl = `${SITE_URL}/ketentuan-layanan/`;
+const jsonLd = [
+  webPageSchema({ name: doc.title, url: pageUrl, description }),
+  breadcrumbSchema(
+    [
+      { name: t.hero.breadcrumbHome, url: `${SITE_URL}/` },
+      { name: doc.title },
+    ],
+    `${pageUrl}#breadcrumb`,
+  ),
+];
 ---
-<BaseLayout title={title} description={description}>
-  <section class="border-b border-black/8 bg-[#0a4147] py-16 text-white md:py-24">
-    <div class="container-shell max-w-4xl">
-      <p class="eyebrow !text-[#e9c976]">Dokumen situs</p>
-      <h1 class="section-title mt-5">Ketentuan Layanan</h1>
-      <p class="mt-5 text-sm text-white/60">Pembaruan terakhir: Agustus 2026</p>
-    </div>
-  </section>
-  <section class="section-pad !pt-12">
-    <article class="legal container-shell max-w-4xl">
-      <p>Dengan mengakses dan menggunakan situs Panduan Alun-Alun Batam Centre, Anda menyetujui ketentuan berikut. Bila Anda tidak setuju, Anda dapat berhenti menggunakan situs.</p>
 
-      <h2>Status independen dan nirlaba</h2>
-      <p>Situs ini merupakan proyek informasi wisata independen dan nirlaba. Situs tidak dikelola, disahkan, atau mewakili Pemerintah Kota Batam, Pemerintah Provinsi Kepulauan Riau, Kementerian Pariwisata Republik Indonesia, pengelola objek wisata, operator transportasi, atau organisasi komersial apa pun.</p>
-      <p>Penyebutan lembaga pemerintah dilakukan untuk menunjukkan sumber informasi publik, bukan untuk menyiratkan afiliasi.</p>
-
-      <h2>Penggunaan konten</h2>
-      <p>Konten disediakan untuk pendidikan dan perencanaan perjalanan umum. Anda boleh menggunakan informasi ini untuk kebutuhan pribadi. Reproduksi komersial atas desain, susunan editorial, ilustrasi logo, atau teks asli situs memerlukan izin pemegang hak yang sesuai.</p>
-
-      <h2>Informasi dan akurasi</h2>
-      <p>Kami berupaya memeriksa silang informasi dengan sumber pemerintah, pariwisata nasional, dan data peta. Namun, kondisi destinasi dapat berubah tanpa pemberitahuan, termasuk:</p>
-      <ul>
-        <li>akses sementara dan pengamanan acara;</li>
-        <li>jam fasilitas atau layanan publik;</li>
-        <li>rute, halte, jadwal, dan tarif transportasi;</li>
-        <li>parkir, lalu lintas, dan rekayasa jalan;</li>
-        <li>biaya kegiatan khusus;</li>
-        <li>kondisi cuaca, pekerjaan konstruksi, atau renovasi.</li>
-      </ul>
-      <p>Informasi penting untuk keselamatan, jadwal, dan biaya sebaiknya selalu diverifikasi melalui kanal resmi pada hari perjalanan.</p>
-
-      <h2>Tidak ada rekomendasi komersial</h2>
-      <p>Bagian makan, akomodasi, belanja, bahan bakar, dan layanan lain hanya menjelaskan kategori kebutuhan. Situs tidak menerima komisi pemesanan dan tidak memberi peringkat atau rekomendasi kepada pedagang tertentu. Tautan luar yang muncul untuk sumber, peta, atau informasi resmi tidak berarti dukungan komersial.</p>
-
-      <h2>Keputusan perjalanan dan keselamatan</h2>
-      <p>Anda bertanggung jawab atas keputusan perjalanan sendiri, termasuk pilihan moda transportasi, aktivitas, waktu berkunjung, pengeluaran, kondisi kesehatan, cuaca, dan kepatuhan terhadap aturan setempat. Ikuti instruksi petugas, rambu, pengamanan acara, serta ketentuan fasilitas yang berlaku di lokasi.</p>
-
-      <h2>Layanan dan tautan pihak ketiga</h2>
-      <p>Situs menggunakan atau menautkan layanan pihak ketiga seperti Google Maps dan, setelah persetujuan pengguna, Google Analytics. Layanan tersebut berada di luar kendali editorial kami dan tunduk pada ketentuan serta kebijakan privasi masing-masing penyedia.</p>
-
-      <h2>Kekayaan intelektual dan hak gambar</h2>
-      <p>Desain situs, logo proyek, susunan informasi, dan teks editorial asli dilindungi oleh hak cipta yang berlaku. Hak atas foto destinasi tetap berada pada fotografer, penerbit, atau pemegang hak masing-masing. Penggunaan foto pada situs bersifat editorial dengan keterangan sumber; keberadaan suatu foto di proyek ini tidak memindahkan hak kepemilikan kepada kami.</p>
-      <p>Data dan tampilan Google Maps digunakan sesuai ketentuan layanan Google.</p>
-
-      <h2>Batasan tanggung jawab</h2>
-      <p>Situs disediakan “sebagaimana adanya” sebagai sumber informasi umum. Sejauh diizinkan hukum, kami tidak memberikan jaminan bahwa semua informasi akan selalu lengkap, bebas kesalahan, atau sesuai untuk tujuan tertentu. Kami tidak bertanggung jawab atas kerugian yang timbul semata-mata karena ketergantungan pada informasi situs tanpa verifikasi yang wajar.</p>
-      <p>Ketentuan ini tidak dimaksudkan untuk mengecualikan tanggung jawab yang tidak dapat dikesampingkan berdasarkan hukum yang berlaku.</p>
-
-      <h2>Perubahan ketentuan</h2>
-      <p>Kami dapat memperbarui ketentuan ini ketika struktur situs, layanan pihak ketiga, atau kewajiban hukum berubah. Versi yang berlaku akan ditampilkan pada halaman ini.</p>
-
-      <h2>Hubungan dengan kebijakan lain</h2>
-      <p>Penggunaan situs juga tunduk pada <a href="/kebijakan-privasi/">Kebijakan Privasi</a> dan pilihan yang Anda buat di <a href="/pengaturan-cookie/">Pengaturan Kuki</a>.</p>
-    </article>
-  </section>
+<BaseLayout title={title} description={description} locale="id" jsonLd={jsonLd} noIndex>
+  <LegalPage doc={doc} lang="id" title={title} description={description} homeLabel={t.hero.breadcrumbHome} homeHref="/" />
 </BaseLayout>

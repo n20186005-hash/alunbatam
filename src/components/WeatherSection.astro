@@ -1,0 +1,152 @@
+---
+import { getContent } from '../content';
+import { weatherTextEn, weatherTextId } from '../content/weather-text';
+import type { Locale } from '../i18n';
+import {
+  beaufortLabel,
+  buildAdvice,
+  chanceWord,
+  formatDayLabel,
+  formatTimeLabel,
+  getWeather,
+  kmhToBeaufort,
+  uvLabel,
+  wmoToText,
+} from '../lib/weather';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'id' } = Astro.props;
+const t = getContent(lang);
+const wt = lang === 'en' ? weatherTextEn : weatherTextId;
+const localeTag = lang === 'en' ? 'en-GB' : 'id-ID';
+
+const weather = await getWeather();
+const advice = weather ? buildAdvice(weather, wt) : null;
+const current = weather ? weather.current : null;
+const today = weather ? weather.daily[0] : null;
+
+const condition = current ? wmoToText(current.code, wt) : null;
+const conditionIcon = condition ? condition.icon : '';
+const conditionLabel = condition ? condition.label : '';
+const windLevel = current ? kmhToBeaufort(current.windKmh) : 0;
+const windText = current ? `${beaufortLabel(windLevel, wt)} · ${Math.round(current.windKmh)} km/jam` : '';
+const tempText = current ? `${Math.round(current.temperature)}°C` : '';
+const feelsText = current ? `${Math.round(current.apparent)}°C` : '';
+const rainText = current ? `${current.precipitation.toFixed(1)} mm` : '';
+const chanceText = today ? chanceWord(today.rainChance, wt) : '';
+const uvText = today ? uvLabel(today.uvMax, wt) : '';
+const uvValueText = today && today.uvMax !== null ? today.uvMax.toFixed(1) : '';
+const todayRangeText = today ? `${Math.round(today.min)}° – ${Math.round(today.max)}°C` : '';
+const updatedText = weather ? formatTimeLabel(weather.current.time, localeTag) : '';
+const summaryText = advice ? advice.summary : '';
+const humiditySentence = advice ? advice.humidityNote : '';
+const hasWeather = Boolean(weather && current);
+
+const forecastRows = weather
+  ? weather.daily.map((day, index) => {
+      const code = wmoToText(day.code, wt);
+      return {
+        icon: code.icon,
+        dayText: index === 0 ? t.weather.today : formatDayLabel(day.date, localeTag),
+        rangeText: `${Math.round(day.max)}° / ${Math.round(day.min)}°`,
+        detailText: `${t.weather.rainPrefix} ${day.rainChance === null ? '-' : day.rainChance + '%'} · ${code.label}`,
+      };
+    })
+  : [];
+
+const riskItems = advice ? advice.risk : [];
+const planItems = advice ? advice.plan : [];
+const outfitItems = advice ? advice.outfit : [];
+const itemList = advice ? advice.items : [];
+const hasRisk = riskItems.length > 0;
+---
+
+<section id="cuaca" class="section-pad bg-[#0a3035] text-white">
+  <div class="container-shell">
+    <div class="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+      <div>
+        <p class="eyebrow !text-[#e9c976]">{t.weather.eyebrow}</p>
+        <h2 class="section-title mt-5">{t.weather.h2}</h2>
+      </div>
+      <p class="max-w-md text-sm leading-6 text-white/62">{t.weather.intro}</p>
+    </div>
+
+    {!hasWeather && (
+      <div class="mt-10 rounded-[1.8rem] border border-white/12 bg-white/6 p-7 text-sm leading-7 text-white/70">
+        {t.weather.fallback}
+      </div>
+    )}
+
+    <div class:list={['mt-10 grid gap-5 lg:grid-cols-[1fr_.85fr]', !hasWeather && 'hidden']}>
+      <div class="rounded-[1.8rem] border border-white/12 bg-white/6 p-7">
+        <div class="flex flex-wrap items-center justify-between gap-5">
+          <div class="flex items-center gap-5">
+            <span class="text-5xl" aria-hidden="true">{conditionIcon}</span>
+            <div>
+              <p class="text-3xl font-extrabold leading-none">{tempText}</p>
+              <p class="mt-1 text-sm text-white/62">{conditionLabel}</p>
+            </div>
+          </div>
+          <p class="text-xs uppercase tracking-[.16em] text-white/50">{t.weather.updatedPrefix} {updatedText} WIB</p>
+        </div>
+        <p class="mt-5 rounded-xl bg-white/6 px-4 py-3 text-sm font-semibold text-white/82">{summaryText}</p>
+        <dl class="mt-6 grid gap-x-8 gap-y-4 border-t border-white/12 pt-6 text-sm sm:grid-cols-2 lg:grid-cols-3">
+          <div><dt class="text-white/55">{t.weather.todayRange}</dt><dd class="font-semibold">{todayRangeText}</dd></div>
+          <div><dt class="text-white/55">{t.weather.feelsLike}</dt><dd class="font-semibold">{feelsText}</dd></div>
+          <div><dt class="text-white/55">{t.weather.rainChance}</dt><dd class="font-semibold">{chanceText}</dd></div>
+          <div><dt class="text-white/55">{t.weather.wind}</dt><dd class="font-semibold">{windText}</dd></div>
+          <div><dt class="text-white/55">{t.weather.precipitation}</dt><dd class="font-semibold">{rainText}</dd></div>
+          <div><dt class="text-white/55">{t.weather.uvIndex}</dt><dd class="font-semibold">{uvText} {uvValueText}</dd></div>
+        </dl>
+        <p class="mt-5 text-sm leading-7 text-white/62">{humiditySentence}</p>
+      </div>
+
+      <div class="rounded-[1.8rem] border border-white/12 bg-white/6 p-7">
+        <p class="rule-label !text-[#e9c976]">{t.weather.forecastTitle}</p>
+        <ul class="mt-5 divide-y divide-white/10 text-sm">
+          {
+            forecastRows.map((row) => (
+              <li class="flex items-center justify-between gap-4 py-3">
+                <span class="flex min-w-0 items-center gap-3">
+                  <span class="text-xl" aria-hidden="true">{row.icon}</span>
+                  <span class="truncate font-semibold">{row.dayText}</span>
+                </span>
+                <span class="text-right text-white/62">
+                  <span class="block font-bold text-white">{row.rangeText}</span>
+                  <span class="block text-xs">{row.detailText}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class:list={['mt-5 rounded-[1.8rem] border border-[#ff9a76]/45 bg-[#ff9a76]/12 p-7', !hasRisk && 'hidden']}>
+      <p class="rule-label !text-[#ffc4ab]">{t.weather.riskTitle}</p>
+      <ul class="mt-4 space-y-2 text-sm leading-7 text-white/86">
+        {riskItems.map((item) => <li>· {item}</li>)}
+      </ul>
+      <p class="mt-4 text-xs leading-6 text-white/55">{t.weather.riskNote}</p>
+    </div>
+
+    <div class:list={['mt-5 grid gap-5 md:grid-cols-3', !hasWeather && 'hidden']}>
+      <article class="rounded-[1.8rem] border border-white/12 bg-white/6 p-7">
+        <p class="rule-label !text-[#e9c976]">{t.weather.outfitTitle}</p>
+        <ul class="mt-4 space-y-2 text-sm leading-7 text-white/78">{outfitItems.map((item) => <li>· {item}</li>)}</ul>
+      </article>
+      <article class="rounded-[1.8rem] border border-white/12 bg-white/6 p-7">
+        <p class="rule-label !text-[#e9c976]">{t.weather.planTitle}</p>
+        <ul class="mt-4 space-y-2 text-sm leading-7 text-white/78">{planItems.map((item) => <li>· {item}</li>)}</ul>
+      </article>
+      <article class="rounded-[1.8rem] border border-white/12 bg-white/6 p-7">
+        <p class="rule-label !text-[#e9c976]">{t.weather.itemsTitle}</p>
+        <ul class="mt-4 space-y-2 text-sm leading-7 text-white/78">{itemList.map((item) => <li>· {item}</li>)}</ul>
+      </article>
+    </div>
+
+    <p class="mt-6 text-xs leading-6 text-white/48">{t.weather.footerNote}</p>
+  </div>
+</section>

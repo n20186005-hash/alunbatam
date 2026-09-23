@@ -1,0 +1,83 @@
+---
+import { getContent } from '../content';
+import type { Locale } from '../i18n';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'id' } = Astro.props;
+const c = getContent(lang).cookieForm;
+---
+
+<form id="cookie-form" class="mt-10 space-y-4" aria-describedby="cookie-status">
+  <label class="flex items-start justify-between gap-6 rounded-2xl border border-black/8 bg-white/65 p-6">
+    <span><strong class="block text-lg">{c.requiredTitle}</strong><span class="mt-1 block text-sm leading-6 text-[#607278]">{c.requiredBody}</span></span>
+    <span class="shrink-0 rounded-full bg-[#0f5f62] px-3 py-1 text-xs font-extrabold text-white">{c.requiredBadge}</span>
+  </label>
+
+  <label class="flex cursor-pointer items-start justify-between gap-6 rounded-2xl border border-black/8 bg-white/65 p-6">
+    <span>
+      <strong class="block text-lg">{c.analyticsTitle}</strong>
+      <span class="mt-1 block text-sm leading-6 text-[#607278]">{c.analyticsBody}</span>
+      <span class="mt-2 block text-xs text-[#78868a]">{c.analyticsNote}</span>
+    </span>
+    <input id="analytics" name="analytics" type="checkbox" class="mt-1 h-5 w-5 accent-[#0f5f62]" />
+  </label>
+
+  <label class="flex cursor-pointer items-start justify-between gap-6 rounded-2xl border border-black/8 bg-white/65 p-6">
+    <span><strong class="block text-lg">{c.preferencesTitle}</strong><span class="mt-1 block text-sm leading-6 text-[#607278]">{c.preferencesBody}</span></span>
+    <input id="preferences" name="preferences" type="checkbox" class="mt-1 h-5 w-5 accent-[#0f5f62]" />
+  </label>
+
+  <div class="flex items-start justify-between gap-6 rounded-2xl border border-black/8 bg-[#eee7d7] p-6 opacity-80">
+    <span><strong class="block text-lg">{c.marketingTitle}</strong><span class="mt-1 block text-sm leading-6 text-[#607278]">{c.marketingBody}</span></span>
+    <span class="shrink-0 rounded-full border border-black/10 px-3 py-1 text-xs font-extrabold text-[#607278]">{c.marketingBadge}</span>
+  </div>
+
+  <div class="flex flex-wrap gap-3 pt-4">
+    <button type="submit" class="btn-primary border-0">{c.save}</button>
+    <button id="reject-all" type="button" class="btn-ghost">{c.reject}</button>
+  </div>
+  <p id="cookie-status" class="min-h-6 text-sm font-semibold text-[#0f5f62]" role="status" aria-live="polite"></p>
+</form>
+
+<script is:inline>
+  (() => {
+    const key = 'aabc-cookie-preferences';
+    const form = document.getElementById('cookie-form');
+    const analytics = document.getElementById('analytics');
+    const preferences = document.getElementById('preferences');
+    const reject = document.getElementById('reject-all');
+    const status = document.getElementById('cookie-status');
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) || 'null');
+      if (saved) {
+        analytics.checked = Boolean(saved.analytics);
+        preferences.checked = Boolean(saved.preferences);
+      }
+    } catch (_) {}
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const previous = JSON.parse(localStorage.getItem(key) || 'null');
+      localStorage.setItem(key, JSON.stringify({ analytics: analytics.checked, preferences: preferences.checked }));
+      status.textContent = document.documentElement.lang === 'en'
+        ? 'Preferences saved. The page will reload if the analytics status changes.'
+        : 'Preferensi berhasil disimpan. Muat ulang halaman untuk menerapkan perubahan analitik.';
+      if (!previous || Boolean(previous.analytics) !== analytics.checked) {
+        setTimeout(() => window.location.reload(), 600);
+      }
+    });
+    reject?.addEventListener('click', () => {
+      const previous = JSON.parse(localStorage.getItem(key) || 'null');
+      analytics.checked = false;
+      preferences.checked = false;
+      localStorage.setItem(key, JSON.stringify({ analytics: false, preferences: false }));
+      status.textContent = document.documentElement.lang === 'en'
+        ? 'Optional categories disabled. The page will reload if the analytics status changes.'
+        : 'Semua kategori yang tidak diperlukan telah ditolak.';
+      if (!previous || Boolean(previous.analytics)) {
+        setTimeout(() => window.location.reload(), 600);
+      }
+    });
+  })();
+</script>

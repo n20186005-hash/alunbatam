@@ -1,0 +1,47 @@
+---
+import { getContent } from '../content';
+import type { Locale } from '../i18n';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'id' } = Astro.props;
+const t = getContent(lang);
+---
+
+<section id="musim" class="section-pad">
+  <div class="container-shell">
+    <div class="max-w-3xl">
+      <p class="eyebrow">{t.season.eyebrow}</p>
+      <h2 class="section-title mt-5">{t.season.h2}</h2>
+      <p class="prose-copy mt-6">{t.season.lede}</p>
+    </div>
+
+    <div class="mt-10 overflow-hidden rounded-[1.8rem] border border-black/8 bg-white/62">
+      <div class="grid grid-cols-[1.1fr_1.3fr_1.5fr_1fr] gap-px bg-black/8 text-sm max-md:hidden">
+        {t.season.headers.map((head) => <div class="bg-[#f1eadb] px-5 py-4 text-[.72rem] font-extrabold uppercase tracking-[.12em] text-[#78868a]">{head}</div>)}
+      </div>
+      <div class="grid gap-px bg-black/8">
+        {
+          t.season.rows.map((row) => (
+            <div class="grid gap-2 bg-white/72 px-5 py-5 max-md:grid-cols-1 md:grid-cols-[1.1fr_1.3fr_1.5fr_1fr]">
+              <p class="font-extrabold">{row.period}</p>
+              <p class="text-sm leading-7 text-[#607278]">{row.weather}</p>
+              <p class="text-sm leading-7 text-[#607278]">{row.strategy}</p>
+              <p class="text-sm font-semibold text-[#0f5f62]">{row.gear}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-8 grid gap-4 md:grid-cols-3">
+      {t.season.notes.map((note) => <div class="rounded-2xl border border-black/8 bg-white/55 p-6 text-sm leading-7 text-[#43565c]">{note}</div>)}
+    </div>
+
+    <p class="mt-6 text-xs leading-6 text-[#78868a]">
+      {t.season.footnote}{' '}
+      <a class="font-bold text-[#0f5f62] underline decoration-[#d4a84f] underline-offset-4" href="https://www.bmkg.go.id/" target="_blank" rel="noopener noreferrer">{t.season.official}</a>.
+    </p>
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+import LegalPage from '../../components/LegalPage.astro';
+import { getContent } from '../../content';
+import { SITE_URL } from '../../data/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { breadcrumbSchema, webPageSchema } from '../../lib/schema';
+
+export const prerender = true;
+
+const t = getContent('en');
+const doc = t.legal.privacy;
+const title = `${doc.title} | ${t.meta.siteName}`;
+const description = 'Privacy policy of the Alun Alun Batam Centre guide: minimal data, analytics, maps, preference storage and your rights.';
+const pageUrl = `${SITE_URL}/en/privacy-policy/`;
+const jsonLd = [
+  webPageSchema({ name: doc.title, url: pageUrl, description }),
+  breadcrumbSchema(
+    [
+      { name: t.hero.breadcrumbHome, url: `${SITE_URL}/en/` },
+      { name: doc.title },
+    ],
+    `${pageUrl}#breadcrumb`,
+  ),
+];
+---
+
+<BaseLayout title={title} description={description} locale="en" jsonLd={jsonLd} noIndex>
+  <LegalPage doc={doc} lang="en" title={title} description={description} homeLabel={t.hero.breadcrumbHome} homeHref="/en/" />
+</BaseLayout>

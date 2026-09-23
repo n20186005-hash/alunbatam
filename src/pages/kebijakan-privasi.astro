@@ -1,77 +1,29 @@
 ---
+import LegalPage from '../components/LegalPage.astro';
+import { getContent } from '../content';
+import { SITE_URL } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { breadcrumbSchema, webPageSchema } from '../lib/schema';
+
 export const prerender = true;
-const title = 'Kebijakan Privasi — Panduan Alun-Alun Batam Centre';
+
+const t = getContent('id');
+const doc = t.legal.privacy;
+const title = `${doc.title} | ${t.meta.siteName}`;
 const description = 'Kebijakan privasi Panduan Alun-Alun Batam Centre, termasuk data minimum, analitik, peta, penyimpanan preferensi, dan hak pengguna.';
+const pageUrl = `${SITE_URL}/kebijakan-privasi/`;
+const jsonLd = [
+  webPageSchema({ name: doc.title, url: pageUrl, description }),
+  breadcrumbSchema(
+    [
+      { name: t.hero.breadcrumbHome, url: `${SITE_URL}/` },
+      { name: doc.title },
+    ],
+    `${pageUrl}#breadcrumb`,
+  ),
+];
 ---
-<BaseLayout title={title} description={description}>
-  <section class="border-b border-black/8 bg-[#0a4147] py-16 text-white md:py-24">
-    <div class="container-shell max-w-4xl">
-      <p class="eyebrow !text-[#e9c976]">Dokumen situs</p>
-      <h1 class="section-title mt-5">Kebijakan Privasi</h1>
-      <p class="mt-5 text-sm text-white/60">Pembaruan terakhir: Agustus 2026</p>
-    </div>
-  </section>
-  <section class="section-pad !pt-12">
-    <article class="legal container-shell max-w-4xl">
-      <p>Kami mengelola situs ini sebagai panduan informasi wisata independen dan nirlaba. Prinsip kami adalah mengumpulkan data seminimal mungkin, menjelaskan tujuan pemrosesan dengan bahasa yang jelas, dan tidak menjual data pribadi pengguna.</p>
 
-      <h2>Informasi yang kami kumpulkan</h2>
-      <p>Data yang dapat diproses saat Anda menggunakan situs ini terbatas pada data yang diperlukan untuk operasi, keamanan, dan—hanya bila Anda menyetujuinya—analisis penggunaan.</p>
-      <ul>
-        <li><strong>Data teknis dasar:</strong> alamat IP, jenis peramban, perangkat, halaman yang diakses, waktu permintaan, dan data log lain yang secara normal diproses oleh penyedia hosting atau jaringan untuk mengirimkan halaman dan menjaga keamanan layanan.</li>
-        <li><strong>Kuki dan penyimpanan lokal:</strong> preferensi persetujuan disimpan pada peramban agar situs mengingat pilihan Anda.</li>
-        <li><strong>Data analitik:</strong> hanya diproses melalui Google Analytics bila Anda secara aktif mengaktifkan kategori analitik pada halaman Pengaturan Kuki.</li>
-        <li><strong>Informasi yang Anda berikan secara sukarela:</strong> bila suatu saat situs menyediakan kanal kontak, data yang Anda kirim melalui kanal tersebut akan digunakan hanya untuk menanggapi permintaan terkait.</li>
-      </ul>
-      <p>Saat ini situs tidak memiliki akun pengguna, basis data pengguna, sistem pemesanan, pembayaran, atau fitur masuk.</p>
-
-      <h2>Bagaimana kami menggunakan informasi</h2>
-      <ul>
-        <li>menyediakan dan mengamankan halaman situs;</li>
-        <li>memahami kinerja serta penggunaan konten setelah persetujuan analitik diberikan;</li>
-        <li>memperbaiki struktur, aksesibilitas, dan pengalaman pengguna;</li>
-        <li>menanggapi permintaan yang Anda kirim secara sukarela apabila kanal kontak tersedia;</li>
-        <li>memenuhi kewajiban hukum yang berlaku.</li>
-      </ul>
-      <p>Kami tidak menggunakan data situs ini untuk membangun profil pemasaran, menjual data, atau menjalankan iklan yang dipersonalisasi.</p>
-
-      <h2>Dasar persetujuan dan pilihan Anda</h2>
-      <p>Kategori analitik bersifat opsional. Pengaturan awalnya tidak aktif. Anda dapat mengaktifkan atau menonaktifkannya kapan saja melalui <a href="/pengaturan-cookie/">Pengaturan Kuki</a>. Kuki atau penyimpanan yang benar-benar diperlukan untuk mengingat pilihan privasi dan menjalankan fungsi dasar tidak dapat dinonaktifkan melalui kontrol situs.</p>
-
-      <h2>Layanan pihak ketiga</h2>
-      <h3>Google Maps</h3>
-      <p>Halaman utama memuat peta Google Maps dalam bingkai peta tertanam. Ketika bagian peta dimuat, peramban Anda berkomunikasi langsung dengan Google. Google dapat menerima data jaringan dan perangkat sesuai kebijakan serta ketentuannya sendiri. Peta digunakan semata-mata untuk konteks lokasi.</p>
-      <h3>Google Analytics</h3>
-      <p>Google Analytics hanya dimuat bila Anda memberikan persetujuan analitik. Implementasi situs menggunakan identitas pengukuran G-HXM22WWPKP dan mengaktifkan opsi anonimisasi IP pada konfigurasi situs.</p>
-      <h3>Gambar</h3>
-      <p>Gambar destinasi yang tampil pada situs disajikan dari berkas lokal proyek, sehingga kunjungan ke halaman tidak memerlukan pemuatan gambar dari layanan foto eksternal. Sumber dan hak foto dijelaskan pada halaman utama dan catatan hak cipta.</p>
-
-      <h2>Penyimpanan dan keamanan</h2>
-      <p>Kami tidak menetapkan periode penyimpanan tunggal untuk log infrastruktur karena retensi dapat bergantung pada konfigurasi penyedia layanan dan kebutuhan keamanan. Kami berupaya memilih retensi yang wajar dan hanya sepanjang diperlukan untuk tujuan yang sah. Tidak ada metode transmisi internet yang sepenuhnya bebas risiko; karena itu kami tidak dapat menjamin keamanan absolut.</p>
-
-      <h2>Hak Anda</h2>
-      <p>Tergantung hukum yang berlaku pada Anda—termasuk Undang-Undang Pelindungan Data Pribadi Indonesia dan, bila relevan, GDPR—Anda dapat memiliki hak untuk:</p>
-      <ul>
-        <li>meminta akses terhadap data pribadi Anda;</li>
-        <li>meminta koreksi data yang tidak akurat;</li>
-        <li>meminta penghapusan dalam keadaan yang diizinkan hukum;</li>
-        <li>membatasi atau mengajukan keberatan atas pemrosesan tertentu;</li>
-        <li>menarik persetujuan untuk pemrosesan yang didasarkan pada persetujuan;</li>
-        <li>mengajukan pengaduan kepada otoritas pengawas yang berwenang.</li>
-      </ul>
-      <p>Penarikan persetujuan tidak memengaruhi keabsahan pemrosesan yang telah berlangsung sebelum persetujuan ditarik.</p>
-
-      <h2>Anak-anak</h2>
-      <p>Situs ini berisi informasi perjalanan umum dan tidak dirancang untuk mengumpulkan data pribadi anak. Kami tidak menyediakan fitur akun, obrolan, atau pengunggahan konten oleh pengguna.</p>
-
-      <h2>Perubahan kebijakan</h2>
-      <p>Kebijakan dapat diperbarui bila teknologi, layanan pihak ketiga, atau kewajiban hukum berubah. Versi yang berlaku akan ditampilkan di halaman ini bersama bulan pembaruan.</p>
-
-      <h2>Kontak terkait privasi</h2>
-      <p>Proyek belum menetapkan domain akhir dan belum mengaktifkan kanal pengumpulan pesan. Alamat kontak privasi akan ditambahkan pada situs setelah identitas domain proyek ditetapkan; sampai saat itu, tidak ada formulir kontak yang mengumpulkan data pribadi melalui situs.</p>
-
-      <div class="mt-10 rounded-2xl border border-black/8 bg-[#efe7d7] p-6 text-sm leading-7"><strong>Ringkasnya:</strong> situs dapat berfungsi tanpa analitik. Anda dapat menolak semua kategori yang tidak diperlukan dan tetap membaca panduan destinasi.</div>
-    </article>
-  </section>
+<BaseLayout title={title} description={description} locale="id" jsonLd={jsonLd} noIndex>
+  <LegalPage doc={doc} lang="id" title={title} description={description} homeLabel={t.hero.breadcrumbHome} homeHref="/" />
 </BaseLayout>

@@ -1,0 +1,32 @@
+---
+import CookieForm from '../../components/CookieForm.astro';
+import LegalPage from '../../components/LegalPage.astro';
+import { getContent } from '../../content';
+import { SITE_URL } from '../../data/site';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { breadcrumbSchema, webPageSchema } from '../../lib/schema';
+
+export const prerender = true;
+
+const t = getContent('en');
+const doc = t.legal.cookies;
+const title = `${doc.title} | ${t.meta.siteName}`;
+const description = 'Manage cookies and privacy preferences for the Alun Alun Batam Centre guide, including analytics and preference storage.';
+const pageUrl = `${SITE_URL}/en/cookie-settings/`;
+const jsonLd = [
+  webPageSchema({ name: doc.title, url: pageUrl, description }),
+  breadcrumbSchema(
+    [
+      { name: t.hero.breadcrumbHome, url: `${SITE_URL}/en/` },
+      { name: doc.title },
+    ],
+    `${pageUrl}#breadcrumb`,
+  ),
+];
+---
+
+<BaseLayout title={title} description={description} locale="en" jsonLd={jsonLd} noIndex>
+  <LegalPage doc={doc} lang="en" title={title} description={description} homeLabel={t.hero.breadcrumbHome} homeHref="/en/">
+    <CookieForm lang="en" />
+  </LegalPage>
+</BaseLayout>

@@ -1,0 +1,48 @@
+---
+import { getContent } from '../content';
+import type { Locale } from '../i18n';
+
+interface Props {
+  lang?: Locale;
+}
+const { lang = 'id' } = Astro.props;
+const t = getContent(lang);
+---
+
+<section id="latar-sejarah" class="section-pad">
+  <div class="container-shell">
+    <div class="max-w-3xl">
+      <p class="eyebrow">{t.history.eyebrow}</p>
+      <h2 class="section-title mt-5">{t.history.h2}</h2>
+      <p class="prose-copy mt-6">{t.history.lede}</p>
+    </div>
+
+    <div class="mt-10 grid gap-5 lg:grid-cols-[1.05fr_.95fr]">
+      <ol class="space-y-4">
+        {
+          t.history.timeline.map((item) => (
+            <li class="card p-6 md:p-7">
+              <p class="rule-label !text-[#0f5f62]">{item.era}</p>
+              <p class="mt-3 text-sm leading-7 text-[#43565c]">{item.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="space-y-5">
+        {
+          t.history.notes.map((note) => (
+            <article class="rounded-2xl border border-black/8 bg-white/55 p-6">
+              <h3 class="text-lg font-extrabold">{note.title}</h3>
+              <p class="mt-2 text-sm leading-7 text-[#607278]">{note.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-8 rounded-2xl bg-[#f1eadb] p-6 text-sm leading-7 text-[#4f6268]">
+      <strong class="text-[#10242a]">{t.history.disclaimer.split(':')[0]}:</strong>
+      {t.history.disclaimer.split(':').slice(1).join(':').trim()}
+    </div>
+  </div>
+</section>

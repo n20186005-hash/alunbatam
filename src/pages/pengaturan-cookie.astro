@@ -1,91 +1,32 @@
 ---
+import CookieForm from '../components/CookieForm.astro';
+import LegalPage from '../components/LegalPage.astro';
+import { getContent } from '../content';
+import { SITE_URL } from '../data/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { breadcrumbSchema, webPageSchema } from '../lib/schema';
+
 export const prerender = true;
-const title = 'Pengaturan Kuki — Panduan Alun-Alun Batam Centre';
+
+const t = getContent('id');
+const doc = t.legal.cookies;
+const title = `${doc.title} | ${t.meta.siteName}`;
 const description = 'Atur kuki dan preferensi privasi untuk Panduan Alun-Alun Batam Centre, termasuk analitik dan penyimpanan preferensi.';
+const pageUrl = `${SITE_URL}/pengaturan-cookie/`;
+const jsonLd = [
+  webPageSchema({ name: doc.title, url: pageUrl, description }),
+  breadcrumbSchema(
+    [
+      { name: t.hero.breadcrumbHome, url: `${SITE_URL}/` },
+      { name: doc.title },
+    ],
+    `${pageUrl}#breadcrumb`,
+  ),
+];
 ---
-<BaseLayout title={title} description={description}>
-  <section class="border-b border-black/8 bg-[#0a4147] py-16 text-white md:py-24">
-    <div class="container-shell max-w-4xl">
-      <p class="eyebrow !text-[#e9c976]">Kontrol privasi</p>
-      <h1 class="section-title mt-5">Pengaturan Kuki</h1>
-      <p class="mt-5 text-sm text-white/60">Pembaruan terakhir: Agustus 2026</p>
-    </div>
-  </section>
-  <section class="section-pad !pt-12">
-    <div class="container-shell max-w-4xl">
-      <div class="legal">
-        <p>Kami menggunakan penyimpanan peramban seminimal mungkin. Anda dapat mengatur kategori opsional di bawah. Pilihan disimpan di perangkat Anda dan dapat diubah kapan saja.</p>
-        <h2>Apa yang dimaksud kuki?</h2>
-        <p>Kuki adalah data kecil yang dapat disimpan oleh situs atau layanan pihak ketiga pada peramban. Situs ini juga menggunakan penyimpanan lokal untuk mengingat preferensi. Dalam halaman ini, istilah “kuki” digunakan secara praktis untuk mencakup keduanya ketika fungsinya serupa.</p>
-      </div>
 
-      <form id="cookie-form" class="mt-10 space-y-4" aria-describedby="cookie-status">
-        <label class="flex items-start justify-between gap-6 rounded-2xl border border-black/8 bg-white/65 p-6">
-          <span><strong class="block text-lg">Kuki yang diperlukan</strong><span class="mt-1 block text-sm leading-6 text-[#607278]">Diperlukan untuk fungsi dasar dan menyimpan pilihan privasi. Kategori ini tidak dapat dinonaktifkan.</span></span>
-          <span class="shrink-0 rounded-full bg-[#0f5f62] px-3 py-1 text-xs font-extrabold text-white">Selalu aktif</span>
-        </label>
-
-        <label class="flex cursor-pointer items-start justify-between gap-6 rounded-2xl border border-black/8 bg-white/65 p-6">
-          <span><strong class="block text-lg">Kuki analitik</strong><span class="mt-1 block text-sm leading-6 text-[#607278]">Mengizinkan Google Analytics membantu kami memahami pola penggunaan situs. Dinonaktifkan secara bawaan dan tidak diperlukan untuk membaca panduan.</span><span class="mt-2 block text-xs text-[#78868a]">Google Analytics · G-HXM22WWPKP</span></span>
-          <input id="analytics" name="analytics" type="checkbox" class="mt-1 h-5 w-5 accent-[#0f5f62]" />
-        </label>
-
-        <label class="flex cursor-pointer items-start justify-between gap-6 rounded-2xl border border-black/8 bg-white/65 p-6">
-          <span><strong class="block text-lg">Preferensi situs</strong><span class="mt-1 block text-sm leading-6 text-[#607278]">Mengizinkan situs mengingat pengaturan antarmuka nonesensial yang mungkin ditambahkan di kemudian hari. Saat ini tidak digunakan untuk personalisasi konten.</span></span>
-          <input id="preferences" name="preferences" type="checkbox" class="mt-1 h-5 w-5 accent-[#0f5f62]" />
-        </label>
-
-        <div class="flex items-start justify-between gap-6 rounded-2xl border border-black/8 bg-[#eee7d7] p-6 opacity-80">
-          <span><strong class="block text-lg">Pemasaran dan iklan personal</strong><span class="mt-1 block text-sm leading-6 text-[#607278]">Situs ini tidak menjalankan iklan personal dan tidak mengaktifkan kategori pemasaran.</span></span>
-          <span class="shrink-0 rounded-full border border-black/10 px-3 py-1 text-xs font-extrabold text-[#607278]">Tidak digunakan</span>
-        </div>
-
-        <div class="flex flex-wrap gap-3 pt-4">
-          <button type="submit" class="btn-primary border-0">Simpan preferensi</button>
-          <button id="reject-all" type="button" class="btn-ghost">Tolak yang tidak perlu</button>
-        </div>
-        <p id="cookie-status" class="min-h-6 text-sm font-semibold text-[#0f5f62]" role="status" aria-live="polite"></p>
-      </form>
-
-      <div class="legal mt-12">
-        <h2>Layanan pihak ketiga</h2>
-        <p>Peta Google Maps pada halaman destinasi dapat berkomunikasi dengan Google ketika peta tertanam dimuat. Kontrol analitik di atas mengatur Google Analytics, tetapi bukan perilaku mandiri peta tertanam Google Maps. Jika Anda ingin menghindari koneksi peta, jangan memuat halaman destinasi atau gunakan pengaturan privasi peramban yang membatasi konten pihak ketiga.</p>
-        <h2>Mengubah pilihan</h2>
-        <p>Anda dapat kembali ke halaman ini kapan saja. Memilih “Tolak yang tidak perlu” menonaktifkan analitik dan preferensi opsional. Menghapus data situs dari peramban juga akan menghapus pilihan yang tersimpan.</p>
-        <h2>Dampak menolak kuki</h2>
-        <p>Konten utama, sejarah, informasi fasilitas, transportasi, pertanyaan umum, dan peta tetap tersedia tanpa Google Analytics. Penolakan kategori opsional tidak memblokir informasi inti situs.</p>
-      </div>
-    </div>
-  </section>
-
-  <script is:inline>
-    (() => {
-      const key = 'aabc-cookie-preferences';
-      const form = document.getElementById('cookie-form');
-      const analytics = document.getElementById('analytics');
-      const preferences = document.getElementById('preferences');
-      const reject = document.getElementById('reject-all');
-      const status = document.getElementById('cookie-status');
-      try {
-        const saved = JSON.parse(localStorage.getItem(key) || 'null');
-        if (saved) {
-          analytics.checked = Boolean(saved.analytics);
-          preferences.checked = Boolean(saved.preferences);
-          status.textContent = 'Preferensi yang tersimpan telah dimuat.';
-        }
-      } catch (_) {}
-      form?.addEventListener('submit', (event) => {
-        event.preventDefault();
-        localStorage.setItem(key, JSON.stringify({ analytics: analytics.checked, preferences: preferences.checked }));
-        status.textContent = 'Preferensi berhasil disimpan. Muat ulang halaman untuk menerapkan perubahan analitik.';
-      });
-      reject?.addEventListener('click', () => {
-        analytics.checked = false;
-        preferences.checked = false;
-        localStorage.setItem(key, JSON.stringify({ analytics: false, preferences: false }));
-        status.textContent = 'Semua kategori yang tidak diperlukan telah ditolak.';
-      });
-    })();
-  </script>
+<BaseLayout title={title} description={description} locale="id" jsonLd={jsonLd} noIndex>
+  <LegalPage doc={doc} lang="id" title={title} description={description} homeLabel={t.hero.breadcrumbHome} homeHref="/">
+    <CookieForm lang="id" />
+  </LegalPage>
 </BaseLayout>
