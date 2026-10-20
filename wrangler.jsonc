@@ -1,4 +1,11 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "alun-alun-batam-centre-guide"
+  "name": "alunbatam",
+  "main": "src/worker.ts",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": true
+  }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "Alun Alun Batam Centre Batam — Panduan Wisata",
+  "name": "Alun-Alun Batam Centre Independent Guide",
   "short_name": "Alun-Alun Batam",
-  "description": "Panduan kunjungan Alun Alun Batam Centre (Batam Centre Park / Dataran Engku Putri) di Kota Batam, Kepulauan Riau: lokasi, peta, jam akses, fasilitas, transportasi, dan etika ruang publik.",
+  "description": "Panduan independen Dataran Engku Putri di Batam Centre.",
   "lang": "id",
   "dir": "ltr",
   "start_url": "/",
@@ -11,7 +11,11 @@
   "orientation": "any",
   "background_color": "#f7f3e8",
   "theme_color": "#0a4147",
-  "categories": ["travel", "navigation", "education"],
+  "categories": [
+    "travel",
+    "navigation",
+    "education"
+  ],
   "icons": [
     {
       "src": "/icons/icon-192.png",

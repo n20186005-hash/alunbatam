@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://alunbatam.com/sitemap-index.xml

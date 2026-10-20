@@ -1,15 +1,4 @@
 ---
-import HomeContent from '../components/HomeContent.astro';
-import { getContent } from '../content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { homeSchemas } from '../lib/schema';
-
-export const prerender = true;
-
-const t = getContent('id');
-const jsonLd = homeSchemas('id');
+import Guide from '../components/Guide.astro';
 ---
-
-<BaseLayout title={t.meta.title} description={t.meta.description} locale="id" jsonLd={jsonLd}>
-  <HomeContent lang="id" />
-</BaseLayout>
+<Guide locale="id"/>

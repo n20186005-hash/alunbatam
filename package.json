@@ -13,11 +13,9 @@
     "check": "astro check",
     "build": "astro build",
     "preview": "astro preview",
-    "deploy": "astro build && wrangler deploy",
-    "verify:dist": "node scripts/validate-build.mjs"
+    "deploy": "pnpm build && wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "14.2.3",
     "@astrojs/sitemap": "3.7.3",
     "@tailwindcss/vite": "4.3.3",
     "astro": "7.2.4",
