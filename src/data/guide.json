@@ -85,7 +85,7 @@
       "legal": {
         "privacy": [
           "Kebijakan Privasi",
-          "Panduan ini tidak memiliki akun, pemesanan, formulir kontak, atau alamat email untuk mengirim data pribadi. Penyedia hosting dapat memproses log teknis seperti alamat IP, waktu, peramban, dan halaman yang diminta untuk pengiriman serta keamanan situs. Google Analytics dimuat hanya setelah izin eksplisit; data penggunaan dan pengenal kuki dapat dikirim ke Google. Tidak ada peta tersemat, font eksternal, atau permintaan cuaca otomatis. Tautan eksternal tunduk pada kebijakan penyedianya. Preferensi analitik menggunakan localStorage dan penolakan tab menggunakan sessionStorage. Bila penyimpanan gagal, pesan status membedakan penolakan untuk tab dari penolakan yang hanya berlaku pada halaman ini; kami tidak mengklaim pilihan permanen tersimpan bila gagal. Hapus data situs melalui pengaturan peramban untuk menghapus izin lama. Pilihan dari versi situs sebelumnya tidak diaktifkan otomatis."
+          "Panduan ini tidak memiliki akun, pemesanan, formulir kontak, atau alamat email untuk mengirim data pribadi. Penyedia hosting dapat memproses log teknis seperti alamat IP, waktu, peramban, dan halaman yang diminta untuk pengiriman serta keamanan situs. Google Analytics dimuat hanya setelah izin eksplisit; data penggunaan dan pengenal kuki dapat dikirim ke Google. Tidak ada peta tersemat, font eksternal, atau permintaan cuaca otomatis. Tautan eksternal tunduk pada kebijakan penyedianya. Pilihan analitik memakai penyimpanan lokal. Jika gagal disimpan, situs mencoba mempertahankan penolakan pada penyimpanan sesi atau status nama jendela tab. Selama penolakan itu tersedia, izin tersimpan dikesampingkan saat berpindah dalam situs atau memuat ulang. Jika kedua cara gagal, hanya halaman ini yang tetap nonaktif; izin tersimpan mungkin masih ada pada halaman berikutnya atau tab lain. Pembacaan atau penghapusan penanda penolakan yang tidak dapat diverifikasi membuat Google Analytics tetap nonaktif. Kotak pilihan dan status mengikuti keadaan yang diterapkan, tanpa mengklaim pilihan permanen tersimpan bila gagal. Hapus data situs melalui pengaturan peramban untuk menghapus izin tersimpan. Pilihan dari versi situs sebelumnya tidak diaktifkan otomatis. Cloudflare Web Analytics dapat menyisipkan beacon peramban terpisah untuk tampilan halaman dan kinerja pemuatan. Kendali Google Analytics ini tidak menonaktifkan pengukuran hosting atau log teknis tersebut. Pembatasan peramban, pemblokir konten atau kebijakan keamanan dapat menghalangi beacon atau permintaannya; keberadaan skrip tidak membuktikan pengiriman berhasil."
         ],
         "terms": [
           "Ketentuan Penggunaan",
@@ -93,7 +93,7 @@
         ],
         "cookies": [
           "Pengaturan Kuki",
-          "Analitik opsional tidak dimuat sebelum Anda mengizinkannya. Pilihan menggunakan penyimpanan lokal; penolakan tab memakai sessionStorage. Tidak ada kuki pemasaran atau fungsi preferensi lain. Anda dapat menarik izin di sini. Bila pilihan permanen gagal disimpan, izin lama mungkin masih ada; baca pesan status dan hapus data situs melalui pengaturan peramban bila diperlukan. Pilihan berlaku pada peramban, tab, atau halaman sesuai status yang ditampilkan."
+          "Google Analytics tidak dimuat sebelum Anda mengizinkannya. Pilihan memakai penyimpanan lokal. Jika gagal disimpan, situs mencoba penyimpanan sesi atau status nama jendela tab untuk mempertahankan penolakan saat berpindah dalam situs dan memuat ulang. Perlindungan itu bergantung pada penolakan yang tetap tersedia; jika kedua cara gagal, hanya halaman ini yang tetap nonaktif. Izin yang tidak dapat diverifikasi pada tab ini tetap nonaktif pada tab ini. Tidak ada kuki pemasaran atau fungsi preferensi lain. Anda dapat menarik izin di sini. Bila pilihan bersama tidak dapat dipastikan atau dihapus, izin tersimpan mungkin masih ada; baca pesan status dan hapus data situs melalui pengaturan peramban bila diperlukan. Pilihan berlaku pada peramban, tab, atau halaman sesuai status yang ditampilkan. Cloudflare Web Analytics dapat menyisipkan beacon peramban terpisah untuk tampilan halaman dan kinerja pemuatan. Kendali Google Analytics ini tidak menonaktifkan pengukuran hosting atau log teknis tersebut. Pembatasan peramban, pemblokir konten atau kebijakan keamanan dapat menghalangi beacon atau permintaannya; keberadaan skrip tidak membuktikan pengiriman berhasil."
         ]
       },
       "save": "Simpan pilihan",
@@ -101,7 +101,7 @@
       "allow": "Izinkan analitik",
       "analytics": "Izinkan Google Analytics",
       "manage": "Pengaturan kuki",
-      "banner": "Analitik opsional dinonaktifkan sebelum izin Anda.",
+      "banner": "Google Analytics bersifat opsional dan nonaktif sebelum izin Anda. Kami mencoba menyimpan pilihan; baca pesan status jika penyimpanan peramban tidak tersedia.",
       "back": "Kembali ke panduan",
       "rating": "Snapshot Google Maps 20 Oktober 2026: 4,5/5 dari 5.826 penilaian. Ini penilaian pihak ketiga yang dapat berubah, bukan skor dari panduan ini."
     },
@@ -190,7 +190,7 @@
       "legal": {
         "privacy": [
           "Privacy Policy",
-          "This guide has no accounts, bookings, contact forms or email address for submitting personal data. The hosting provider may process technical logs such as IP address, time, browser and requested page for delivery and security. Google Analytics loads only after explicit permission; usage data and cookie identifiers may then be sent to Google. There are no embedded maps, external fonts or automatic weather requests. External links are subject to their providers’ policies. Analytics choices use localStorage and tab refusal uses sessionStorage. If storage fails, the status distinguishes tab refusal from refusal that applies only to this page; we do not claim that a permanent choice was saved when it failed. Clear site data in browser settings to remove old permission. Choices from earlier site versions are not automatically enabled."
+          "This guide has no accounts, bookings, contact forms or email address for submitting personal data. The hosting provider may process technical logs such as IP address, time, browser and requested page for delivery and security. Google Analytics loads only after explicit permission; usage data and cookie identifiers may then be sent to Google. There are no embedded maps, external fonts or automatic weather requests. External links are subject to their providers’ policies. Analytics choices use local storage. If saving fails, the site tries to retain refusal in this tab’s session storage or window-name state. While that refusal remains available, it overrides stored permission during same-site navigation and refresh. If both fallbacks fail, only this page stays off; stored permission may remain on a later page or in another tab. Unavailable reads or unverified refusal clearing keep Google Analytics off. The checkbox and status reflect the applied choice, and a failed save is not presented as permanent. Clear site data in browser settings to remove stored permission. Choices from earlier site versions are not automatically enabled. Cloudflare Web Analytics may add a separate browser beacon for page views and loading performance. This Google Analytics control does not disable the hosting measurement or technical logs. Browser restrictions, content blockers or the security policy may block the beacon or its requests; a script in the page does not prove successful delivery."
         ],
         "terms": [
           "Terms of Use",
@@ -198,7 +198,7 @@
         ],
         "cookies": [
           "Cookie Settings",
-          "Optional analytics does not load before you allow it. Choices use local storage; tab refusal uses sessionStorage. There are no marketing cookies or other preference functions. You can withdraw permission here. If a permanent choice cannot be saved, an old grant may remain; read the status and clear site data in browser settings if needed. The choice applies to this browser, tab or page as stated in the status."
+          "Google Analytics does not load before you allow it. Choices use local storage. When saving fails, the site tries session storage or this tab’s window-name state to retain refusal during same-site navigation and refresh. That protection lasts only while the refusal remains available; if both fallbacks fail, only this page stays off. An allowance that this tab cannot verify is kept off in this tab. There are no marketing cookies or other preference functions. You can withdraw permission here. If the shared choice cannot be confirmed or cleared, stored permission may remain; read the status and clear site data in browser settings if needed. The choice applies to this browser, tab or page as stated in the status. Cloudflare Web Analytics may add a separate browser beacon for page views and loading performance. This Google Analytics control does not disable the hosting measurement or technical logs. Browser restrictions, content blockers or the security policy may block the beacon or its requests; a script in the page does not prove successful delivery."
         ]
       },
       "save": "Save choice",
@@ -206,7 +206,7 @@
       "allow": "Allow analytics",
       "analytics": "Allow Google Analytics",
       "manage": "Cookie settings",
-      "banner": "Optional analytics is off before your permission.",
+      "banner": "Google Analytics is optional and off before your permission. We try to save your choice; read the status if browser storage is unavailable.",
       "back": "Back to guide",
       "rating": "Google Maps snapshot on 20 October 2026: 4.5/5 from 5,826 ratings. These are changing third-party ratings, not a score awarded by this guide."
     }
